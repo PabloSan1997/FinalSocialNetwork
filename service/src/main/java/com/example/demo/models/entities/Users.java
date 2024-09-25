@@ -1,6 +1,7 @@
 package com.example.demo.models.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -48,6 +49,13 @@ public class Users {
             uniqueConstraints = {@UniqueConstraint(columnNames = {"id_user", "id_role"})}
     )
     private List<Roles> roles;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Imagen> images;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Comments> comments;
 
     @PrePersist
     public void prePersist(){

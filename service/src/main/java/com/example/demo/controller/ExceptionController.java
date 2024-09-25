@@ -2,6 +2,7 @@ package com.example.demo.controller;
 
 import com.example.demo.exceptions.MyBadImplementationtException;
 import com.example.demo.exceptions.MyBadRequestException;
+import com.example.demo.exceptions.MyNotFoundException;
 import com.example.demo.models.dtos.ErrorDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.servlet.resource.NoResourceFoundException;
@@ -19,7 +21,8 @@ import java.util.List;
 public class ExceptionController {
 
     @ExceptionHandler({
-            NoResourceFoundException.class
+            NoResourceFoundException.class,
+            MyNotFoundException.class
     })
     public ResponseEntity<?> notFound(Exception e){
         return generateError(HttpStatus.NOT_FOUND, e);
@@ -38,7 +41,8 @@ public class ExceptionController {
 
     @ExceptionHandler({
             MyBadRequestException.class,
-            HttpMessageNotReadableException.class
+            HttpMessageNotReadableException.class,
+            MissingServletRequestParameterException.class
     })
     public ResponseEntity<?> badRequest(Exception e){
         return generateError(HttpStatus.BAD_REQUEST, e);
