@@ -19,10 +19,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.management.relation.Role;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -39,6 +41,8 @@ public class UserServiceImp implements UserService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private AuthenticationManager authenticationManager;
+    @Autowired
+    private LoginRegisterRepository loginRegisterRepository;
 
     @Override
     @Transactional
@@ -47,15 +51,15 @@ public class UserServiceImp implements UserService {
         String password = loginDto.getPassword();
         Authentication authorizationToken = new UsernamePasswordAuthenticationToken(username, password);
 
-       try{
-           Authentication authentication = authenticationManager.authenticate(authorizationToken);
-           UserSecurityDto userSecurityDto = (UserSecurityDto) authentication.getPrincipal();
+        try {
+            Authentication authentication = authenticationManager.authenticate(authorizationToken);
+            UserSecurityDto userSecurityDto = (UserSecurityDto) authentication.getPrincipal();
 
-           return LoginResponse.builder()
-                   .username(username).jwtoken(userSecurityDto.getToken()).build();
-       }catch (Exception e){
-           throw new MyBadRequestException("Usuario o contraseña incorrectos");
-       }
+            return LoginResponse.builder()
+                    .username(username).jwtoken(userSecurityDto.getToken()).build();
+        } catch (Exception e) {
+            throw new MyBadRequestException("Usuario o contraseña incorrectos");
+        }
     }
 
     @Override
@@ -65,34 +69,52 @@ public class UserServiceImp implements UserService {
         String password = passwordEncoder.encode(registerDto.getPassword());
         String nickname = registerDto.getNickname();
         Optional<Users> oUser = userRepository.findByUsername(username);
-        if(oUser.isPresent()){
-            Users user = oUser.get();
-            if(user.getEnabled())
-                throw new MyBadRequestException("Nombre de usuario ocupado");
-            user.setPassword(password);
-            user.setNickname(nickname);
-            userRepository.save(user);
-            LoginDto loginDto = new LoginDto(username, registerDto.getPassword());
-            return login(loginDto);
+        Users user = null;
+        if (oUser.isEmpty()){
+            user = new Users();
+            user.setUsername(username);
         }
-
-        Roles role = roleRepository.findByName("USER").orElseThrow(()->{
-            throw new MyBadImplementationtException("Problemas con los roles");
-        });
+        else {
+            if (!oUser.get().getEnabled()) {
+                user = oUser.get();
+                user.setEnabled(true);
+            }else{
+                throw new MyBadRequestException("Ususario ocupado");
+            }
+        }
+        Roles role = roleRepository.findByName("USER").orElseThrow();
         List<Roles> roles = new ArrayList<>();
         roles.add(role);
-
-        Users newUser = Users.builder()
-                .username(username).nickname(nickname)
-                .password(password).roles(roles).build();
-        userRepository.save(newUser);
-        LoginDto loginDto = new LoginDto(username, registerDto.getPassword());
+        UserInfo userInfo = UserInfo.builder()
+                .urlPerfil(registerDto.getUrlPerfil())
+                .description(registerDto.getDescription())
+                .build();
+        user.setNickname(nickname);
+        user.setPassword(password);
+        user.setRoles(roles);
+        user.setUserInfo(userInfo);
+        Users userSave = userRepository.save(user);
+        LoginDto loginDto = new LoginDto();
+        loginDto.setPassword(registerDto.getPassword());
+        loginDto.setUsername(userSave.getUsername());
         return login(loginDto);
     }
 
     @Override
     @Transactional
     public UserInfo viewUserInfo() {
-        return null;
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = (String) authentication.getPrincipal();
+        return userRepository.findByUsername(username).orElseThrow().getUserInfo();
     }
+
+    @Override
+    @Transactional
+    public void logout(String bearerToken) {
+        String token = bearerToken.replace("Bearer ", "");
+        LoginRegister loginRegister = loginRegisterRepository.findByJwtoken(token).orElseThrow();
+        loginRegister.setEnabled(false);
+        loginRegisterRepository.save(loginRegister);
+    }
+
 }

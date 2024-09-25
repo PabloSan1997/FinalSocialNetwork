@@ -35,7 +35,8 @@ public class SecurityConfig {
         http.csrf(c -> c.disable())
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(HttpMethod.POST, "/api/user/login", "/app/user/register").permitAll()
-                        .requestMatchers(HttpMethod.GET, "/api/images").hasRole("USER")
+                        .requestMatchers(HttpMethod.GET, "/api/images", "/api/user/userInfo").hasRole("USER")
+                        .requestMatchers(HttpMethod.POST, "/api/user/logout").hasRole("USER")
                         .anyRequest().permitAll()
                 )
                 .addFilter(new JwtValidationFilter(authenticationManager(), jwtService))

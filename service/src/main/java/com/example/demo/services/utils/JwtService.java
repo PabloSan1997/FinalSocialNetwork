@@ -18,6 +18,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.SecretKey;
+import java.io.IOException;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -48,12 +49,11 @@ public class JwtService {
                 .compact();
     }
 
-    public UserSecurityDto validationToken(String token) throws JsonProcessingException {
+    public UserSecurityDto validationToken(String token) throws IOException {
         Optional<LoginRegister> loginRegister = loginRegisterRepository.findByJwtoken(token);
 
         if (loginRegister.isEmpty() || !loginRegister.get().getEnabled())
             throw new MyBadRequestException();
-
         Claims claims = Jwts.parser().verifyWith(generateKey()).build()
                 .parseSignedClaims(token).getPayload();
         String username = claims.getSubject();
@@ -61,8 +61,8 @@ public class JwtService {
         String authoritiesJson = (String) claims.get("authorities");
         Collection<? extends GrantedAuthority> authorities = List.of(
                 objectMapper
-                        .addMixIn(GrantedAuthorityJson.class, SimpleGrantedAuthority.class)
-                        .readValue(authoritiesJson, SimpleGrantedAuthority[].class)
+                        .addMixIn(SimpleGrantedAuthority.class, GrantedAuthorityJson.class)
+                        .readValue(authoritiesJson.getBytes(), SimpleGrantedAuthority[].class)
         );
         return new UserSecurityDto(
                 username,

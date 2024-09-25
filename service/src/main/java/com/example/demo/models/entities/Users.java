@@ -35,8 +35,10 @@ public class Users {
     private Date updateAt;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_infor")
+    @JsonIgnore
     private UserInfo userInfo;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     private List<LoginRegister> logins;
     @ManyToMany
     @JoinTable(

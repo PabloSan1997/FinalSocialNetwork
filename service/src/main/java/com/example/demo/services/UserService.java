@@ -9,4 +9,5 @@ public interface UserService {
     LoginResponse login(LoginDto loginDto);
     LoginResponse register(RegisterDto registerDto);
     UserInfo viewUserInfo();
+    void logout(String token);
 }

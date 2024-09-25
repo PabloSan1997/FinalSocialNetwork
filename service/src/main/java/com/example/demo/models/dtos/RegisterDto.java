@@ -19,5 +19,11 @@ public class RegisterDto {
     private String nickname;
     @NotBlank
     private String password;
+    @NotBlank
+    @Size(min = 5)
+    private String urlPerfil;
+    @NotBlank
+    @Size(max = 250)
+    private String description;
 
 }
