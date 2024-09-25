@@ -1,6 +1,10 @@
 package com.example.demo.security;
 
+import com.example.demo.security.filters.JwtValidationFilter;
+import com.example.demo.services.utils.InitialValues;
+import com.example.demo.services.utils.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -26,15 +30,23 @@ public class SecurityConfig {
     PasswordEncoder passwordEncoder(){
         return new BCryptPasswordEncoder();
     }
-
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(c->c.disable())
+    SecurityFilterChain filterChain(HttpSecurity http, JwtService jwtService) throws Exception{
+        http.csrf(c -> c.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers(HttpMethod.POST, "/api/user/login", "/api/user/register").permitAll()
+                        .requestMatchers(HttpMethod.POST, "/api/user/login", "/app/user/register").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/images").hasRole("USER")
                         .anyRequest().permitAll()
-                ).sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+                )
+                .addFilter(new JwtValidationFilter(authenticationManager(), jwtService))
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
         return http.build();
+    }
+
+    @Bean
+    CommandLineRunner commandLineRunner(InitialValues initialValues){
+        return  args -> {
+            initialValues.viewAndGeneratedRoles();
+        };
     }
 }
