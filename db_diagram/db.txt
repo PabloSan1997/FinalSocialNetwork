@@ -3,13 +3,26 @@ table users{
   username varchar(60) [unique]
   nickname varchar(60)
   password varchar(500)
+  enabled boolean
   id_info bigint
+  create_at date
+  update_at date
+}
+
+table user_role{
+  id_user bigint
+  id_role bigint
+}
+
+table roles{
+  id bigint [primary key]
+  name varchar(50)
 }
 
 table login_register{
   id bigint [primary key]
   jwtoken varchar(2500) [unique]
-  enable boolean
+  enabled boolean
   create_at date
   update_at date
   id_user bigint
@@ -61,3 +74,5 @@ Ref : users.id > comments.id_user
 Ref : images.id > comments.id_image
 Ref : likes_photo.id_image < images.id
 Ref : likes_photo.id_user < users.id
+Ref : users.id <> user_role.id_user
+Ref : roles.id <> user_role.id_role
