@@ -60,8 +60,8 @@ public class SecurityConfig {
                         "/api/images/{id}",
                         "/api/user/otherUser"
                 ).hasRole("USER")
-                .requestMatchers(HttpMethod.DELETE, "/api/images/{id}").hasRole("USER")
-                .requestMatchers(HttpMethod.POST, "/api/user/logout", "/api/images").hasRole("USER")
-                .anyRequest().permitAll();
+                .requestMatchers(HttpMethod.DELETE, "/api/images/{id}", "/api/comments/{id}").hasRole("USER")
+                .requestMatchers(HttpMethod.POST, "/api/user/logout", "/api/images", "/api/comments").hasRole("USER")
+                .anyRequest().authenticated();
     }
 }

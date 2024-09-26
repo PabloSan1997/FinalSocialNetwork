@@ -18,5 +18,5 @@ public class CommentDto {
     private String comment;
     @NotNull
     @NotBlank
-    private UUID idImage;
+    private String idImage;
 }

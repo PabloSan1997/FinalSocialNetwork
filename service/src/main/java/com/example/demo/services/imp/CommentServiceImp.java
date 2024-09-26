@@ -14,6 +14,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.UUID;
+
 @Service
 public class CommentServiceImp implements CommentService {
     @Autowired
@@ -27,7 +29,7 @@ public class CommentServiceImp implements CommentService {
     @Transactional
     public Comments saveComment(CommentDto commentDto) {
         Users user = getUserAuthentication();
-        Imagen imagen = imagesRepository.findById(commentDto.getIdImage()).orElseThrow(()->{
+        Imagen imagen = imagesRepository.findById(UUID.fromString(commentDto.getIdImage())).orElseThrow(()->{
             throw new MyBadRequestException("Id image invalid");
         });
         Comments comments = Comments.builder()

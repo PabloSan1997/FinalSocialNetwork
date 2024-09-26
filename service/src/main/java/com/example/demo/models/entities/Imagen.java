@@ -33,8 +33,11 @@ public class Imagen {
     @JsonIgnoreProperties({"images", "roles", "id", "createAt", "enabled", "updateAt"})
     private Users user;
 
-    @OneToMany(mappedBy = "image", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "image", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comments> comments;
+    @OneToMany(mappedBy = "image", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<LikePhoto> likes;
 
     @PrePersist
     public void prePersist(){

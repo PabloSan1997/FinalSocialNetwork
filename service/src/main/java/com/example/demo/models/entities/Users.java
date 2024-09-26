@@ -56,7 +56,9 @@ public class Users {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Comments> comments;
-
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<LikePhoto> likes;
     @PrePersist
     public void prePersist(){
         enabled = true;

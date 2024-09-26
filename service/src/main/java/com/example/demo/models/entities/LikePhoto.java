@@ -1,7 +1,5 @@
 package com.example.demo.models.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,32 +8,28 @@ import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
+@Table(name = "like_photo")
 @Entity
-@Table(name = "comments")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class Comments {
+public class LikePhoto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(name = "create_at")
-    private Date createAt;
-    @Column(length = 250, nullable = false)
-    private String comment;
-    @ManyToOne
-    @JoinColumn(name = "id_user")
-    @JsonIgnoreProperties({"images", "roles", "id", "createAt", "enabled", "updateAt", "comments"})
-    private Users user;
+    @Column(name = "like_date")
+    private Date likeDate;
 
     @ManyToOne
+    @JoinColumn(name = "id_user")
+    private Users user;
+    @ManyToOne
     @JoinColumn(name = "id_image")
-    @JsonIgnore
     private Imagen image;
 
     @PrePersist
     public void prePersist(){
-        createAt = new Date();
+        likeDate = new Date();
     }
 }

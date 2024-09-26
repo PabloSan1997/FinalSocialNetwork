@@ -26,8 +26,8 @@ public class ImagenController {
         return ResponseEntity.ok(imagenService.findByUsername(pageable, username));
     }
     @GetMapping("/{id}")
-    public ResponseEntity<?> findById(@PathVariable UUID id) {
-        return ResponseEntity.ok(imagenService.findById(id));
+    public ResponseEntity<?> findById(@PathVariable UUID id, Pageable pageable) {
+        return ResponseEntity.ok(imagenService.findById(id, pageable));
     }
 
     @DeleteMapping("/{id}")

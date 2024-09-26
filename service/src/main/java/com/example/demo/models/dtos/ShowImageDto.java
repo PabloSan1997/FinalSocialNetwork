@@ -20,6 +20,7 @@ public class ShowImageDto {
     private String nickname;
     private String urlPerfil;
     private Long comments;
+    private Long likes;
 
     public ShowImageDto(UUID id, String urlImage, String description, Date createAt, Users users) {
         this.id = id;

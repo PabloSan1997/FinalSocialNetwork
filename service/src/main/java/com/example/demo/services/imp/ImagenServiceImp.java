@@ -4,11 +4,13 @@ import com.example.demo.exceptions.MyBadRequestException;
 import com.example.demo.exceptions.MyNotFoundException;
 import com.example.demo.models.dtos.SaveImageDto;
 import com.example.demo.models.dtos.ShowImageDto;
+import com.example.demo.models.dtos.ShowOneImage;
 import com.example.demo.models.entities.Comments;
 import com.example.demo.models.entities.Imagen;
 import com.example.demo.models.entities.Users;
 import com.example.demo.repositories.CommentsRepository;
 import com.example.demo.repositories.ImagesRepository;
+import com.example.demo.repositories.LikePhotoRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.ImagenService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -28,6 +31,8 @@ public class ImagenServiceImp implements ImagenService {
     private UserRepository userRepository;
     @Autowired
     private CommentsRepository commentsRepository;
+    @Autowired
+    private LikePhotoRepository likePhotoRepository;
 
     @Override
     @Transactional
@@ -45,20 +50,25 @@ public class ImagenServiceImp implements ImagenService {
         List<ShowImageDto> images = imagesRepository.findAllByUsername(username, pageable);
         return images.stream().peek(p -> {
             Long count = commentsRepository.countComentsByImageId(p.getId());
+            Long counLikes = likePhotoRepository.countLikeByImageId(p.getId());
             p.setComments(count);
+            p.setLikes(counLikes);
         }).toList();
 
     }
 
     @Override
     @Transactional
-    public Imagen findById(UUID id, Pageable pageable) {
+    public ShowOneImage findById(UUID id, Pageable pageable) {
         Imagen imagen = imagesRepository.findById(id).orElseThrow(() -> {
             throw new MyNotFoundException("No se encontró imagen");
         });
+        ShowOneImage showOneImage = new ShowOneImage(imagen);
         List<Comments> comments = commentsRepository.findCommentsByImageId(id, pageable);
-        imagen.setComments(comments);
-        return imagen;
+        Long likes = likePhotoRepository.countLikeByImageId(id);
+        showOneImage.setComments(comments);
+        showOneImage.setLikes(likes);
+        return showOneImage;
     }
 
     @Override
@@ -68,7 +78,9 @@ public class ImagenServiceImp implements ImagenService {
         Imagen imagen = Imagen.builder()
                 .description(saveImageDto.getDescription())
                 .urlImage(saveImageDto.getUrlImage())
-                .user(user).build();
+                .user(user)
+                .likes(new ArrayList<>())
+                .comments(new ArrayList<>()).build();
         return imagesRepository.save(imagen);
     }
 
