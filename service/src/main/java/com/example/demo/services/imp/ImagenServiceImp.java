@@ -3,8 +3,11 @@ package com.example.demo.services.imp;
 import com.example.demo.exceptions.MyBadRequestException;
 import com.example.demo.exceptions.MyNotFoundException;
 import com.example.demo.models.dtos.SaveImageDto;
+import com.example.demo.models.dtos.ShowImageDto;
+import com.example.demo.models.entities.Comments;
 import com.example.demo.models.entities.Imagen;
 import com.example.demo.models.entities.Users;
+import com.example.demo.repositories.CommentsRepository;
 import com.example.demo.repositories.ImagesRepository;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.ImagenService;
@@ -23,25 +26,39 @@ public class ImagenServiceImp implements ImagenService {
     private ImagesRepository imagesRepository;
     @Autowired
     private UserRepository userRepository;
+    @Autowired
+    private CommentsRepository commentsRepository;
 
     @Override
     @Transactional
-    public List<Imagen> findAll(Pageable pageable) {
-        return imagesRepository.findAllByCreate(pageable);
+    public List<ShowImageDto> findAll(Pageable pageable) {
+        List<ShowImageDto> images = imagesRepository.findAllByCreate(pageable);
+        return images.stream().peek(p -> {
+            Long count = commentsRepository.countComentsByImageId(p.getId());
+            p.setComments(count);
+        }).toList();
     }
 
     @Override
     @Transactional
-    public List<Imagen> findByUsername(Pageable pageable, String username) {
-        return imagesRepository.findAllByUsername(username, pageable);
+    public List<ShowImageDto> findByUsername(Pageable pageable, String username) {
+        List<ShowImageDto> images = imagesRepository.findAllByUsername(username, pageable);
+        return images.stream().peek(p -> {
+            Long count = commentsRepository.countComentsByImageId(p.getId());
+            p.setComments(count);
+        }).toList();
+
     }
 
     @Override
     @Transactional
-    public Imagen findById(UUID id) {
-        return imagesRepository.findById(id).orElseThrow(()->{
+    public Imagen findById(UUID id, Pageable pageable) {
+        Imagen imagen = imagesRepository.findById(id).orElseThrow(() -> {
             throw new MyNotFoundException("No se encontró imagen");
         });
+        List<Comments> comments = commentsRepository.findCommentsByImageId(id, pageable);
+        imagen.setComments(comments);
+        return imagen;
     }
 
     @Override
@@ -59,15 +76,15 @@ public class ImagenServiceImp implements ImagenService {
     @Transactional
     public void deleteImage(UUID id) {
         String username = getUserAuthentication().getUsername();
-        Imagen imagen = imagesRepository.findByIdAndUsername(id, username).orElseThrow(()->{
+        Imagen imagen = imagesRepository.findByIdAndUsername(id, username).orElseThrow(() -> {
             throw new MyBadRequestException("No tienes permiso para borrar esta imagen");
         });
         imagesRepository.deleteById(imagen.getId());
     }
 
-    private Users getUserAuthentication(){
+    private Users getUserAuthentication() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return userRepository.findByUsername(username).orElseThrow(()->{
+        return userRepository.findByUsername(username).orElseThrow(() -> {
             throw new MyBadRequestException("Error con el usuario");
         });
     }

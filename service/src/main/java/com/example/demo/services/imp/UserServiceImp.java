@@ -2,6 +2,7 @@ package com.example.demo.services.imp;
 
 import com.example.demo.exceptions.MyBadImplementationtException;
 import com.example.demo.exceptions.MyBadRequestException;
+import com.example.demo.exceptions.MyNotFoundException;
 import com.example.demo.models.dtos.LoginDto;
 import com.example.demo.models.dtos.LoginResponse;
 import com.example.demo.models.dtos.RegisterDto;
@@ -115,6 +116,14 @@ public class UserServiceImp implements UserService {
         LoginRegister loginRegister = loginRegisterRepository.findByJwtoken(token).orElseThrow();
         loginRegister.setEnabled(false);
         loginRegisterRepository.save(loginRegister);
+    }
+
+    @Override
+    @Transactional
+    public UserInfo findPerfil(String username) {
+        return userRepository.findByUsername(username).orElseThrow(()->{
+            throw new MyNotFoundException("No existe usuario");
+        }).getUserInfo();
     }
 
 }

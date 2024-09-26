@@ -27,6 +27,10 @@ public class UserController {
     public ResponseEntity<?> findUserInfo(){
         return ResponseEntity.ok(userService.viewUserInfo());
     }
+    @GetMapping("/otherUser")
+    public ResponseEntity<?> findByUsername(@RequestParam(name = "username") String username){
+        return ResponseEntity.ok(userService.findPerfil(username));
+    }
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@RequestHeader(name = "Authorization") String bearerToken){
         userService.logout(bearerToken);

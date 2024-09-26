@@ -10,4 +10,5 @@ public interface UserService {
     LoginResponse register(RegisterDto registerDto);
     UserInfo viewUserInfo();
     void logout(String token);
+    UserInfo findPerfil(String username);
 }

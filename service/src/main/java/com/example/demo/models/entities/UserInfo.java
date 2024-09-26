@@ -1,5 +1,6 @@
 package com.example.demo.models.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,5 +22,6 @@ public class UserInfo {
     @Column(length = 250)
     private String description;
     @OneToOne(mappedBy = "userInfo")
+    @JsonIgnoreProperties({"roles", "userInfo"})
     private Users user;
 }

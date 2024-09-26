@@ -36,7 +36,7 @@ public class Users {
     private Date updateAt;
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "id_infor")
-    @JsonIgnore
+    @JsonIgnoreProperties({"user", "description"})
     private UserInfo userInfo;
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore

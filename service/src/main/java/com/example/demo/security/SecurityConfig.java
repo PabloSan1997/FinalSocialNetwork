@@ -52,7 +52,14 @@ public class SecurityConfig {
     private static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> generateEndPointsAuth() {
         return auth -> auth
                 .requestMatchers(HttpMethod.POST, "/api/user/login", "/app/user/register").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/images", "/api/user/userInfo", "/api/images", "/api/images/user", "/api/images/{id}").hasRole("USER")
+                .requestMatchers(HttpMethod.GET,
+                        "/api/images",
+                        "/api/user/userInfo",
+                        "/api/images",
+                        "/api/images/user",
+                        "/api/images/{id}",
+                        "/api/user/otherUser"
+                ).hasRole("USER")
                 .requestMatchers(HttpMethod.DELETE, "/api/images/{id}").hasRole("USER")
                 .requestMatchers(HttpMethod.POST, "/api/user/logout", "/api/images").hasRole("USER")
                 .anyRequest().permitAll();
