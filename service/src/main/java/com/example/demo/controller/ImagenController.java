@@ -40,4 +40,9 @@ public class ImagenController {
     public ResponseEntity<?> save(@Valid @RequestBody SaveImageDto saveImageDto){
         return ResponseEntity.status(HttpStatus.CREATED).body(imagenService.save(saveImageDto));
     }
+    @PostMapping("/like/{id}")
+    public ResponseEntity<?> like(@PathVariable UUID id){
+        imagenService.checkLike(id);
+        return ResponseEntity.noContent().build();
+    }
 }

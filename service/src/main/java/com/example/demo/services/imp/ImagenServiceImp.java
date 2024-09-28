@@ -7,6 +7,7 @@ import com.example.demo.models.dtos.ShowImageDto;
 import com.example.demo.models.dtos.ShowOneImage;
 import com.example.demo.models.entities.Comments;
 import com.example.demo.models.entities.Imagen;
+import com.example.demo.models.entities.LikePhoto;
 import com.example.demo.models.entities.Users;
 import com.example.demo.repositories.CommentsRepository;
 import com.example.demo.repositories.ImagesRepository;
@@ -37,10 +38,15 @@ public class ImagenServiceImp implements ImagenService {
     @Override
     @Transactional
     public List<ShowImageDto> findAll(Pageable pageable) {
+        Users users = getUserAuthentication();
         List<ShowImageDto> images = imagesRepository.findAllByCreate(pageable);
         return images.stream().peek(p -> {
             Long count = commentsRepository.countComentsByImageId(p.getId());
+            Long countLiles = likePhotoRepository.countLikeByImageId(p.getId());
+            boolean isAdminUSer = likePhotoRepository.findByUserAndImage(users.getId(), p.getId()).isPresent();
             p.setComments(count);
+            p.setLikes(countLiles);
+            p.setIsUserLike(isAdminUSer);
         }).toList();
     }
 
@@ -92,6 +98,24 @@ public class ImagenServiceImp implements ImagenService {
             throw new MyBadRequestException("No tienes permiso para borrar esta imagen");
         });
         imagesRepository.deleteById(imagen.getId());
+    }
+
+    @Override
+    @Transactional
+    public void checkLike(UUID idImage) {
+        Users users = getUserAuthentication();
+        Imagen imagen = imagesRepository.findById(idImage).orElseThrow(()->{
+            throw new MyBadRequestException("id invalid");
+        });
+        likePhotoRepository.findByUserAndImage(users.getId(), imagen.getId()).ifPresentOrElse(
+                l ->{
+                    likePhotoRepository.deleteById(l.getId());
+                },()->{
+                    LikePhoto likePhoto = LikePhoto.builder()
+                            .image(imagen).user(users).build();
+                    likePhotoRepository.save(likePhoto);
+                }
+        );
     }
 
     private Users getUserAuthentication() {

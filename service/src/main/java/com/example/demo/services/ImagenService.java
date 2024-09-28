@@ -16,5 +16,5 @@ public interface ImagenService {
     ShowOneImage findById(UUID id, Pageable pageable);
     Imagen save(SaveImageDto saveImageDto);
     void deleteImage(UUID id);
-
+    void checkLike(UUID idImage);
 }

@@ -16,7 +16,7 @@ public class CommentController {
 
     @PostMapping
     public ResponseEntity<?> newComment(@Valid @RequestBody CommentDto commentDto){
-        System.out.println(commentDto.getComment()+"\n\n\n\n");
+
         return ResponseEntity.status(HttpStatus.CREATED).body(commentService.saveComment(commentDto));
     }
     @DeleteMapping("/{id}")

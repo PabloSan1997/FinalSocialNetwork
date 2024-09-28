@@ -11,4 +11,5 @@ public interface UserService {
     UserInfo viewUserInfo();
     void logout(String token);
     UserInfo findPerfil(String username);
+    void disableCount();
 }

@@ -51,7 +51,7 @@ public class SecurityConfig {
 
     private static Customizer<AuthorizeHttpRequestsConfigurer<HttpSecurity>.AuthorizationManagerRequestMatcherRegistry> generateEndPointsAuth() {
         return auth -> auth
-                .requestMatchers(HttpMethod.POST, "/api/user/login", "/app/user/register").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/user/login", "/api/user/register").permitAll()
                 .requestMatchers(HttpMethod.GET,
                         "/api/images",
                         "/api/user/userInfo",
@@ -60,8 +60,8 @@ public class SecurityConfig {
                         "/api/images/{id}",
                         "/api/user/otherUser"
                 ).hasRole("USER")
-                .requestMatchers(HttpMethod.DELETE, "/api/images/{id}", "/api/comments/{id}").hasRole("USER")
-                .requestMatchers(HttpMethod.POST, "/api/user/logout", "/api/images", "/api/comments").hasRole("USER")
+                .requestMatchers(HttpMethod.DELETE, "/api/images/{id}", "/api/comments/{id}", "/api/user/disable").hasRole("USER")
+                .requestMatchers(HttpMethod.POST, "/api/user/logout", "/api/images", "/api/comments", "/api/image/like/{id}").hasRole("USER")
                 .anyRequest().authenticated();
     }
 }

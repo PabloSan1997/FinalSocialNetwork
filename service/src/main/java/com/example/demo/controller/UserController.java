@@ -36,4 +36,9 @@ public class UserController {
         userService.logout(bearerToken);
         return ResponseEntity.noContent().build();
     }
+    @DeleteMapping("/disable")
+    public ResponseEntity<?> disableCount(){
+        userService.disableCount();
+        return ResponseEntity.noContent().build();
+    }
 }

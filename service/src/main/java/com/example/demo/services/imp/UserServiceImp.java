@@ -126,4 +126,15 @@ public class UserServiceImp implements UserService {
         }).getUserInfo();
     }
 
+    @Override
+    @Transactional
+    public void disableCount() {
+        String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Users user = userRepository.findByUsername(username).orElseThrow(()->{
+            throw new MyBadRequestException("Invalid");
+        });
+        user.setEnabled(false);
+        userRepository.save(user);
+    }
+
 }
