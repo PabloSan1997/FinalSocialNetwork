@@ -4,6 +4,7 @@ import com.example.demo.exceptions.MyBadRequestException;
 import com.example.demo.exceptions.MyNotFoundException;
 import com.example.demo.models.dtos.SaveImageDto;
 import com.example.demo.models.dtos.ShowImageDto;
+import com.example.demo.models.dtos.ShowLikeDto;
 import com.example.demo.models.dtos.ShowOneImage;
 import com.example.demo.models.entities.Comments;
 import com.example.demo.models.entities.Imagen;
@@ -42,11 +43,10 @@ public class ImagenServiceImp implements ImagenService {
         List<ShowImageDto> images = imagesRepository.findAllByCreate(pageable);
         return images.stream().peek(p -> {
             Long count = commentsRepository.countComentsByImageId(p.getId());
-            Long countLiles = likePhotoRepository.countLikeByImageId(p.getId());
-            boolean isAdminUSer = likePhotoRepository.findByUserAndImage(users.getId(), p.getId()).isPresent();
             p.setComments(count);
-            p.setLikes(countLiles);
-            p.setIsUserLike(isAdminUSer);
+            ShowLikeDto showLikeDto = viewImageLikes(p.getId());
+            p.setUserLike(showLikeDto.getUserLike());
+            p.setLikes(showLikeDto.getCountLikes());
         }).toList();
     }
 
@@ -56,9 +56,10 @@ public class ImagenServiceImp implements ImagenService {
         List<ShowImageDto> images = imagesRepository.findAllByUsername(username, pageable);
         return images.stream().peek(p -> {
             Long count = commentsRepository.countComentsByImageId(p.getId());
-            Long counLikes = likePhotoRepository.countLikeByImageId(p.getId());
             p.setComments(count);
-            p.setLikes(counLikes);
+            ShowLikeDto showLikeDto = viewImageLikes(p.getId());
+            p.setUserLike(showLikeDto.getUserLike());
+            p.setLikes(showLikeDto.getCountLikes());
         }).toList();
 
     }
@@ -71,9 +72,10 @@ public class ImagenServiceImp implements ImagenService {
         });
         ShowOneImage showOneImage = new ShowOneImage(imagen);
         List<Comments> comments = commentsRepository.findCommentsByImageId(id, pageable);
-        Long likes = likePhotoRepository.countLikeByImageId(id);
         showOneImage.setComments(comments);
-        showOneImage.setLikes(likes);
+        ShowLikeDto showLikeDto = viewImageLikes(id);
+        showOneImage.setUserLike(showLikeDto.getUserLike());
+        showOneImage.setLikes(showLikeDto.getCountLikes());
         return showOneImage;
     }
 
@@ -102,20 +104,28 @@ public class ImagenServiceImp implements ImagenService {
 
     @Override
     @Transactional
-    public void checkLike(UUID idImage) {
+    public ShowLikeDto checkLike(UUID idImage) {
         Users users = getUserAuthentication();
         Imagen imagen = imagesRepository.findById(idImage).orElseThrow(()->{
             throw new MyBadRequestException("id invalid");
         });
+        ShowLikeDto showLikeDto = ShowLikeDto.builder().idImage(idImage).build();
         likePhotoRepository.findByUserAndImage(users.getId(), imagen.getId()).ifPresentOrElse(
                 l ->{
                     likePhotoRepository.deleteById(l.getId());
+                    Long likesImage = likePhotoRepository.countLikeByImageId(idImage);
+                    showLikeDto.setUserLike(false);
+                    showLikeDto.setCountLikes(likesImage);
                 },()->{
                     LikePhoto likePhoto = LikePhoto.builder()
                             .image(imagen).user(users).build();
                     likePhotoRepository.save(likePhoto);
+                    Long likesImage = likePhotoRepository.countLikeByImageId(idImage);
+                    showLikeDto.setUserLike(true);
+                    showLikeDto.setCountLikes(likesImage);
                 }
         );
+        return showLikeDto;
     }
 
     private Users getUserAuthentication() {
@@ -123,5 +133,12 @@ public class ImagenServiceImp implements ImagenService {
         return userRepository.findByUsername(username).orElseThrow(() -> {
             throw new MyBadRequestException("Error con el usuario");
         });
+    }
+
+    private ShowLikeDto viewImageLikes(UUID id){
+        Users user = getUserAuthentication();
+        Long likesCount = likePhotoRepository.countLikeByImageId(id);
+        boolean isUserLike = likePhotoRepository.findByUserAndImage(user.getId(), id).isPresent();
+        return ShowLikeDto.builder().countLikes(likesCount).userLike(isUserLike).idImage(id).build();
     }
 }

@@ -2,6 +2,7 @@ package com.example.demo.services;
 
 import com.example.demo.models.dtos.SaveImageDto;
 import com.example.demo.models.dtos.ShowImageDto;
+import com.example.demo.models.dtos.ShowLikeDto;
 import com.example.demo.models.dtos.ShowOneImage;
 import com.example.demo.models.entities.Imagen;
 import org.springframework.data.domain.Pageable;
@@ -16,5 +17,5 @@ public interface ImagenService {
     ShowOneImage findById(UUID id, Pageable pageable);
     Imagen save(SaveImageDto saveImageDto);
     void deleteImage(UUID id);
-    void checkLike(UUID idImage);
+    ShowLikeDto checkLike(UUID idImage);
 }

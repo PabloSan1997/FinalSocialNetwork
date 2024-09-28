@@ -24,6 +24,7 @@ public class ShowOneImage {
     private Users user;
     private List<Comments> comments;
     private Long likes;
+    private Boolean userLike;
     public ShowOneImage(Imagen imagen){
         this.id = imagen.getId();
         this.urlImage = imagen.getUrlImage();

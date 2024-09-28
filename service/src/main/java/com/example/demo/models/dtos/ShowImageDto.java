@@ -21,7 +21,7 @@ public class ShowImageDto {
     private String urlPerfil;
     private Long comments;
     private Long likes;
-    private Boolean isUserLike;
+    private Boolean userLike;
 
     public ShowImageDto(UUID id, String urlImage, String description, Date createAt, Users users) {
         this.id = id;
