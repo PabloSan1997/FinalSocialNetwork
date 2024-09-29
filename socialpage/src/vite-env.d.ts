@@ -1,11 +1,15 @@
 /// <reference types="vite/client" />
 
 
-interface InitialState {
+interface InitialStateAuthentication{
     username: string;
-    nickname: string;
+    message: string;
     token: string;
 }
+
+// interface IntitialStateSocial{
+
+// }
 
 interface ErroDto {
     error: string;

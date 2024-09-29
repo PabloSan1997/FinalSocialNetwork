@@ -1,12 +1,17 @@
 
+import { Provider } from "react-redux";
 import { MainRoutes } from "./MainRotes";
+import { store } from "./store/store";
 
 
 
 function App() {
 
   return (
-    <MainRoutes/>
+    <Provider store={store}>
+      <MainRoutes />
+    </Provider>
+
   );
 }
 
