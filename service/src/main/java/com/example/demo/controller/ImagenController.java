@@ -42,7 +42,7 @@ public class ImagenController {
     }
     @PostMapping("/like/{id}")
     public ResponseEntity<?> like(@PathVariable UUID id){
-        imagenService.checkLike(id);
-        return ResponseEntity.noContent().build();
+
+        return ResponseEntity.ok(imagenService.checkLike(id));
     }
 }
