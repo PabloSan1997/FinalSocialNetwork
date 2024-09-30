@@ -1,6 +1,10 @@
 /// <reference types="vite/client" />
 
 
+type Children = {
+    children:JSX.Element|JSX.Element[]
+}
+
 interface InitialStateAuthentication{
     username: string;
     message: string;

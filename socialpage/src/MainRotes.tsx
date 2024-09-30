@@ -1,19 +1,60 @@
-import { HashRouter, useRoutes } from "react-router-dom";
+import { HashRouter, Navigate, useRoutes } from "react-router-dom";
 import { LoginRegister } from "./lyouts/LoginRegister";
+import { useAppSelector } from "./store/hooks";
+import { Home } from "./lyouts/Home";
+import { Header } from "./components/Header";
+import { Perfil } from "./lyouts/Perfil";
 
+
+const MainRedirect = () => {
+    const token = useAppSelector(state => state.authReducer.token);
+    const routes = token.trim() ? '/home' : '/login';
+    return (<Navigate to={routes} />);
+}
+const RedirectToken = ({ children }: Children) => {
+    const token = useAppSelector(state => state.authReducer.token);
+    if (!token.trim())
+        return <Navigate to='/login' />
+    return (
+        <>
+            {children}
+        </>
+    );
+}
 
 const PageRoutes = () => useRoutes([
     {
-        element:<LoginRegister/>,
-        path:'/login'
+        element: <LoginRegister />,
+        path: '/login'
+    },
+    {
+        path: '/',
+        element: <MainRedirect />
+    },
+    {
+        path: '/home',
+        element: (
+            <RedirectToken>
+                <Home />
+            </RedirectToken>
+        )
+    },
+    {
+        path:'/perfil',
+        element:(
+            <RedirectToken>
+                <Perfil />
+            </RedirectToken>
+        )
     }
 ]);
 
 
-export function MainRoutes(){
-    return(
+export function MainRoutes() {
+    return (
         <HashRouter>
-            <PageRoutes/>
+            <Header/>
+            <PageRoutes />
         </HashRouter>
     );
 }
