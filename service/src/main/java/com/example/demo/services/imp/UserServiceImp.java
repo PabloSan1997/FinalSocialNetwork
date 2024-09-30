@@ -1,20 +1,14 @@
 package com.example.demo.services.imp;
 
-import com.example.demo.exceptions.MyBadImplementationtException;
+
 import com.example.demo.exceptions.MyBadRequestException;
 import com.example.demo.exceptions.MyNotFoundException;
-import com.example.demo.models.dtos.LoginDto;
-import com.example.demo.models.dtos.LoginResponse;
-import com.example.demo.models.dtos.RegisterDto;
-import com.example.demo.models.dtos.UserSecurityDto;
+import com.example.demo.models.dtos.*;
 import com.example.demo.models.entities.LoginRegister;
 import com.example.demo.models.entities.Roles;
 import com.example.demo.models.entities.UserInfo;
 import com.example.demo.models.entities.Users;
-import com.example.demo.repositories.LoginRegisterRepository;
-import com.example.demo.repositories.RoleRepository;
-import com.example.demo.repositories.UserInfoRepository;
-import com.example.demo.repositories.UserRepository;
+import com.example.demo.repositories.*;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -44,6 +38,8 @@ public class UserServiceImp implements UserService {
     private AuthenticationManager authenticationManager;
     @Autowired
     private LoginRegisterRepository loginRegisterRepository;
+    @Autowired
+    private FollowingRepository followingRepository;
 
     @Override
     @Transactional
@@ -71,15 +67,14 @@ public class UserServiceImp implements UserService {
         String nickname = registerDto.getNickname();
         Optional<Users> oUser = userRepository.findByUsername(username);
         Users user = null;
-        if (oUser.isEmpty()){
+        if (oUser.isEmpty()) {
             user = new Users();
             user.setUsername(username);
-        }
-        else {
+        } else {
             if (!oUser.get().getEnabled()) {
                 user = oUser.get();
                 user.setEnabled(true);
-            }else{
+            } else {
                 throw new MyBadRequestException("Ususario ocupado");
             }
         }
@@ -103,10 +98,12 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public UserInfo viewUserInfo() {
+    public UserShowInfoDto viewUserInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = (String) authentication.getPrincipal();
-        return userRepository.findByUsername(username).orElseThrow().getUserInfo();
+        Users user = userRepository.findByUsername(username).orElseThrow();
+        return generateShowUser(user);
+
     }
 
     @Override
@@ -120,21 +117,35 @@ public class UserServiceImp implements UserService {
 
     @Override
     @Transactional
-    public UserInfo findPerfil(String username) {
-        return userRepository.findByUsername(username).orElseThrow(()->{
+    public UserShowInfoDto findPerfil(String username) {
+        Users user = userRepository.findByUsername(username).orElseThrow(() -> {
             throw new MyNotFoundException("No existe usuario");
-        }).getUserInfo();
+        });
+        return generateShowUser(user);
     }
 
     @Override
     @Transactional
     public void disableCount() {
         String username = (String) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        Users user = userRepository.findByUsername(username).orElseThrow(()->{
+        Users user = userRepository.findByUsername(username).orElseThrow(() -> {
             throw new MyBadRequestException("Invalid");
         });
         user.setEnabled(false);
         userRepository.save(user);
     }
 
+    private UserShowInfoDto generateShowUser(Users user){
+        UserInfo userInfo = user.getUserInfo();
+        Long following = followingRepository.countFollowings(user.getId());
+        Long followers = followingRepository.countFollowers(user.getId());
+        return UserShowInfoDto.builder()
+                .followers(followers)
+                .following(following)
+                .nickname(user.getNickname())
+                .username(user.getUsername())
+                .urlPerfil(userInfo.getUrlPerfil())
+                .id(user.getId())
+                .description(userInfo.getDescription()).build();
+    }
 }
