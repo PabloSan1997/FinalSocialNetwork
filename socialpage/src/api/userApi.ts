@@ -39,7 +39,7 @@ export class UserApi {
         if (!ft.ok)
             throw await ft.json() as ErroDto;
     }
-    async userInfo(token:string):Promise<UserInfo>{
+    async userInfo(token:string):Promise<ShowUserInfo>{
         const ft = await fetch(`${propsApi.baseUrl}/user/userInfo`, {
             method:'GET',
             headers:{

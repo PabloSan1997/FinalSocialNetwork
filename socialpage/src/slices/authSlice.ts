@@ -6,7 +6,8 @@ import { authExtreReducer } from "./extraReducer/authExtreReducer";
 const initialState:InitialStateAuthentication = {
     username: "",
     message: "",
-    token: socialStorage.read()
+    token: socialStorage.read(),
+    id:0
 }
 
 const authSlice = createSlice({
@@ -44,11 +45,14 @@ const authSlice = createSlice({
             state.token = '';
             state.message = initialState.message;
             state.username = initialState.username;
+            state.id = 0;
             socialStorage.save('');
         });
 
         builder.addCase(authExtreReducer.userInfo.fulfilled, (state, action)=>{
-            state.username = action.payload.user.username;
+            state.username = action.payload.username;
+            state.message = '';
+            state.id = action.payload.id;
         });
     }
 });

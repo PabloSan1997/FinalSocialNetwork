@@ -9,6 +9,7 @@ interface InitialStateAuthentication{
     username: string;
     message: string;
     token: string;
+    id:number;
 }
 
 // interface IntitialStateSocial{
@@ -20,6 +21,16 @@ interface ErroDto {
     message: string;
     statusCode: number;
     timestamp: string;
+}
+
+interface ShowUserInfo{
+    id:number;
+    username:string;
+    nickname:string;
+    description:string;
+    urlPerfil:string;
+    following:number;
+    followers:number;
 }
 
 interface UserInfo {
