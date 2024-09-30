@@ -22,6 +22,7 @@ const authSlice = createSlice({
             state.token = action.payload.jwtoken;
             state.username = action.payload.username;
             state.message = '';
+            socialStorage.save(action.payload.jwtoken);
         });
         builder.addCase(authExtreReducer.login.rejected, (state, action)=>{
             const message = !action.error.message?'':action.error.message;
@@ -32,10 +33,22 @@ const authSlice = createSlice({
             state.token = action.payload.jwtoken;
             state.username = action.payload.username;
             state.message='';
+            socialStorage.save(action.payload.jwtoken);
         });
         builder.addCase(authExtreReducer.register.rejected, (state, action)=>{
             const message = !action.error.message?'':action.error.message;
             state.message = message; 
+        });
+
+        builder.addCase(authExtreReducer.logout.fulfilled, (state)=>{
+            state.token = '';
+            state.message = initialState.message;
+            state.username = initialState.username;
+            socialStorage.save('');
+        });
+
+        builder.addCase(authExtreReducer.userInfo.fulfilled, (state, action)=>{
+            state.username = action.payload.user.username;
         });
     }
 });
