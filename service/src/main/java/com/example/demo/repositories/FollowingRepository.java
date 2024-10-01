@@ -15,12 +15,12 @@ public interface FollowingRepository extends CrudRepository<Following, Long> {
     @Query("select f From Following f where f.user1.id=?1")
     List<Following> findAllUsersFollowings(Long id, Pageable pageable);
 
-    @Query("select f From Following f where f.user2.id=?2")
+    @Query("select f From Following f where f.user2.id=?1")
     List<Following> findAllUserFollowers(Long id, Pageable pageable);
 
-    @Query("select count(f) From Following f where f.user2.id=?1")
+    @Query("select count(f) From Following f where f.user1.id=?1")
     Long countFollowings(Long id);
-    @Query("select count(f) From Following f where f.user2.id=?2")
+    @Query("select count(f) From Following f where f.user2.id=?1")
     Long countFollowers(Long id);
 
 

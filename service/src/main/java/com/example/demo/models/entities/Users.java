@@ -61,8 +61,10 @@ public class Users {
     private List<LikePhoto> likes;
 
     @OneToMany(mappedBy = "user1", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     public List<Following> following;
     @OneToMany(mappedBy = "user2", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
     public List<Following> followers;
     @PrePersist
     public void prePersist(){

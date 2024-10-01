@@ -54,7 +54,7 @@ public class FollowerServiceImp implements FollowerService {
     public ShowUsersFollow followings(Long id, Pageable pageable) {
         List<Users> users = followingRepository.findAllUsersFollowings(id, pageable).stream()
                 .map(Following::getUser2).toList();
-        return ShowUsersFollow.builder().build();
+        return ShowUsersFollow.builder().users(users).build();
     }
 
     @Override
