@@ -23,7 +23,7 @@ export function Register() {
         }
         const { username, nickname, password, description, urlPerfil } = registerForm;
         if (!username && !nickname && !password && !description && !urlPerfil) {
-            dispatch(authActions.writeMessage({ message: 'Faltan campos para llenar' }));
+            dispatch(authActions.writeMessageRegister({ message: 'Faltan campos para llenar' }));
         } else {
             dispatch(authExtreReducer.register({ register: registerForm }));
         }
@@ -46,7 +46,7 @@ export function Register() {
             <input type="text" name="urlPerfil" id="register_urlPerfil" />
 
             <button className="" type="submit">Entrar</button>
-            {state.message.trim() ? <p>{state.message}</p> : null}
+            {state.messageRegister.trim() ? <p>{state.messageRegister}</p> : null}
         </form>
     );
 }

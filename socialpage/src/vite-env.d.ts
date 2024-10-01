@@ -7,9 +7,10 @@ type Children = {
 
 interface InitialStateAuthentication{
     username: string;
-    message: string;
+    messageLogin: string;
     token: string;
     id:number;
+    messageRegister:string;
 }
 
 // interface IntitialStateSocial{

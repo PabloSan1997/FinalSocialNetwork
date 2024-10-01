@@ -5,7 +5,8 @@ import { authExtreReducer } from "./extraReducer/authExtreReducer";
 
 const initialState:InitialStateAuthentication = {
     username: "",
-    message: "",
+    messageLogin: "",
+    messageRegister:"",
     token: socialStorage.read(),
     id:0
 }
@@ -14,36 +15,42 @@ const authSlice = createSlice({
     name:'slice/auth',
     initialState,
     reducers:{
-        writeMessage(state, action:PayloadAction<{message:string}>){
-            state.message = action.payload.message;
+        writeMessageLogin(state, action:PayloadAction<{message:string}>){
+            state.messageLogin = action.payload.message;
+        },
+        writeMessageRegister(state, action:PayloadAction<{message:string}>){
+            state.messageRegister = action.payload.message;
         }
     },
     extraReducers:builder =>{
         builder.addCase(authExtreReducer.login.fulfilled, (state, action)=>{
             state.token = action.payload.jwtoken;
             state.username = action.payload.username;
-            state.message = '';
+            state.messageLogin = '';
+            state.messageRegister = '';
             socialStorage.save(action.payload.jwtoken);
         });
         builder.addCase(authExtreReducer.login.rejected, (state, action)=>{
             const message = !action.error.message?'':action.error.message;
-            state.message = message; 
+            state.messageLogin = message; 
         });
 
         builder.addCase(authExtreReducer.register.fulfilled, (state, action)=>{
             state.token = action.payload.jwtoken;
             state.username = action.payload.username;
-            state.message='';
+            state.messageLogin = '';
+            state.messageRegister = '';
             socialStorage.save(action.payload.jwtoken);
         });
         builder.addCase(authExtreReducer.register.rejected, (state, action)=>{
             const message = !action.error.message?'':action.error.message;
-            state.message = message; 
+            state.messageRegister = message; 
         });
 
         builder.addCase(authExtreReducer.logout.fulfilled, (state)=>{
             state.token = '';
-            state.message = initialState.message;
+            state.messageLogin = initialState.messageLogin;
+            state.messageRegister = initialState.messageRegister
             state.username = initialState.username;
             state.id = 0;
             socialStorage.save('');
@@ -51,7 +58,8 @@ const authSlice = createSlice({
 
         builder.addCase(authExtreReducer.userInfo.fulfilled, (state, action)=>{
             state.username = action.payload.username;
-            state.message = '';
+            state.messageLogin = '';
+            state.messageRegister = '';
             state.id = action.payload.id;
         });
     }

@@ -5,8 +5,6 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { authExtreReducer } from "../slices/extraReducer/authExtreReducer";
 
 
-
-
 export function HeaderMenu() {
     const stateAuth = useAppSelector(state => state.authReducer);
     const dispatch = useAppDispatch();
@@ -17,7 +15,7 @@ export function HeaderMenu() {
     if (!stateAuth.token.trim())
         return <></>;
     return (
-        <nav>
+        <nav className='header_menu'>
             <Link to={'/perfil'}>{stateAuth.username}</Link>
             <button
                 onClick={() => dispatch(authExtreReducer.logout({ token: stateAuth.token }))}

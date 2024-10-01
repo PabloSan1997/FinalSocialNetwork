@@ -1,0 +1,45 @@
+@import 'colors.scss';
+header{
+    width: 100%;
+    display: flex;
+    background: $maincolor-950;
+    h1{
+        width: fit-content;
+        margin: 0 2rem;
+        padding: 1rem 0;
+        &:hover{ 
+            transform: scale(1.12);
+        }
+        a{
+            text-decoration: none;
+            color: white;
+        }
+    }
+    .header_menu{
+        margin: auto 2rem 0.5rem auto;
+        
+        a{
+            text-decoration: none;
+            color: white;
+            margin-right: 1rem;
+            font-size: 1.2rem;
+            cursor: pointer;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+        button{
+           font-size: 1.1rem;
+           padding: 0 0.3rem;
+           background: $maincolor-900;
+           border-radius: 0.3rem;
+           border: 2px solid $maincolor-800;
+           color: $maincolor-200;
+           cursor: pointer;
+           transition: background 0.2s ease;
+           &:hover{
+            background: $maincolor-950;
+           }
+        }
+    }
+}

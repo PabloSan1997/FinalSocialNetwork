@@ -16,9 +16,9 @@ export default function Login() {
             password: data.get('password') as string
         }
         if (!loginForm.username.trim()) {
-            dispatch(authActions.writeMessage({ message: 'Escriba su nombre de usuario' }));
+            dispatch(authActions.writeMessageLogin({ message: 'Escriba su nombre de usuario' }));
         } else if (!loginForm.password.trim()) {
-            dispatch(authActions.writeMessage({ message: 'Escriba su contraseña' }));
+            dispatch(authActions.writeMessageLogin({ message: 'Escriba su contraseña' }));
         } else {
             dispatch(authExtreReducer.login({ login: loginForm }));
         }
@@ -31,7 +31,7 @@ export default function Login() {
             <label htmlFor="login_password">Password</label>
             <input type="password" name="password" id="login_password" />
             <button className="" type="submit">Entrar</button>
-            {state.message.trim() ? <p>{state.message}</p> : null}
+            {state.messageLogin.trim() ? <p>{state.messageLogin}</p> : null}
         </form>
     );
 }

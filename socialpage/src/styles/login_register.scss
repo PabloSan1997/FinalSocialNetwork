@@ -1,0 +1,135 @@
+ @import 'colors.scss';
+
+ .area_forms {
+     display: flex;
+     width: 90%;
+     margin: 1rem auto;
+     border-radius: 0.5rem;
+     overflow: hidden;
+     border: 2px solid $maincolor-950;
+     box-shadow: 5px 5px 5px $maincolor-950;
+
+     .area_form {
+         width: 50%;
+         height: 100%;
+         display: flex;
+         flex-direction: column;
+         padding: 1rem;
+         box-sizing: border-box;
+
+         &.register_area {
+             background: $maincolor-900;
+             h2{
+                color:$maincolor-50;
+            }
+             .register {
+                
+                 label {
+                     color: $maincolor-50;
+                 }
+
+                 button {
+                     background: $maincolor-100;
+                     color: $maincolor-950;
+                     border: 2px outset $maincolor-950;
+                     cursor: pointer;
+                     transition: all 0.2s ease-out;
+
+                     &:hover {
+                         background: $maincolor-950;
+                         color: $maincolor-100;
+                     }
+                     &:active{
+                        background: $maincolor-900;
+                        border-style: inset;
+                     }
+                 }
+                 p{
+                    color: rgb(240, 215, 215);
+                 }
+             }
+         }
+
+         &.login_area {
+            h2{
+                color:$maincolor-900;
+            }
+             .login {
+                 label {
+                     color: $maincolor-900;
+                 }
+                 button {
+                    background: $maincolor-100;
+                    color: $maincolor-950;
+                    border: 2px outset $maincolor-100;
+                    cursor: pointer;
+                    transition: all 0.2s ease-out;
+
+                    &:hover {
+                        background: $maincolor-200;
+                        color: $maincolor-950;
+                    }
+                    &:active{
+                       background: $maincolor-900;
+                       border-style: inset;
+                    }
+                }
+             }
+         }
+
+         h2 {
+             margin: 0 auto 0.8rem;
+         }
+
+         form {
+             display: flex;
+             flex-direction: column;
+             width: 100%;
+             margin: 0 auto;
+
+             label {
+                 margin-bottom: 0.2rem;
+                 font-size: 1.1rem;
+                 padding: 0.2rem;
+             }
+
+             input {
+                 margin-bottom: 0.8rem;
+                 border-radius: 0.2rem;
+                 border: 2px solid $maincolor-950;
+                 color: $maincolor-50;
+                 font-size: 1rem;
+                 color: $maincolor-950;
+                 outline: none;
+                 padding: 0.2rem;
+                 box-sizing: border-box;
+                 background: $maincolor-50;
+             }
+
+             button {
+                 width: fit-content;
+                 padding: 0.2rem 0.5rem;
+                 font-size: 1.1rem;
+                 margin-top: 0.8rem;
+                 border-radius: 0.5rem;
+             }
+             p{
+                color: rgb(78, 8, 5);
+                font-size: 1.1rem;
+             }
+         }
+     }
+ }
+
+ @media(width<640px) {
+
+     .area_forms {
+         flex-direction: column;
+         width: 95%;
+         margin: 2rem auto;
+
+         .area_form {
+             width: 100%;
+         }
+     }
+ }
