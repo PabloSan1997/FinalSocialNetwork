@@ -15,7 +15,7 @@ public interface ImagenService {
     List<ShowImageDto> findAll(Pageable pageable);
     List<ShowImageDto> findByUsername(Pageable pageable, String username);
     ShowOneImage findById(UUID id, Pageable pageable);
-    Imagen save(SaveImageDto saveImageDto);
+    ShowImageDto save(SaveImageDto saveImageDto);
     void deleteImage(UUID id);
     ShowLikeDto checkLike(UUID idImage);
 }

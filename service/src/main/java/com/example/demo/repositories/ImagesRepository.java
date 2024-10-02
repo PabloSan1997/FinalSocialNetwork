@@ -18,4 +18,6 @@ public interface ImagesRepository extends CrudRepository<Imagen, UUID> {
     List<ShowImageDto> findAllByUsername(String username, Pageable pageable);
     @Query("select i from Imagen i where i.id = ?1 and i.user.username=?2")
     Optional<Imagen> findByIdAndUsername(UUID id, String username);
+    @Query("select new com.example.demo.models.dtos.ShowImageDto(i.id, i.urlImage, i.description, i.createAt, i.user) from Imagen i where i.id=?1")
+    Optional<ShowImageDto> findShowImageId(UUID id);
 }

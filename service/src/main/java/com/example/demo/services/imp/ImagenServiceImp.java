@@ -81,7 +81,7 @@ public class ImagenServiceImp implements ImagenService {
 
     @Override
     @Transactional
-    public Imagen save(SaveImageDto saveImageDto) {
+    public ShowImageDto save(SaveImageDto saveImageDto) {
         Users user = getUserAuthentication();
         Imagen imagen = Imagen.builder()
                 .description(saveImageDto.getDescription())
@@ -89,7 +89,13 @@ public class ImagenServiceImp implements ImagenService {
                 .user(user)
                 .likes(new ArrayList<>())
                 .comments(new ArrayList<>()).build();
-        return imagesRepository.save(imagen);
+
+        Imagen imagenRes = imagesRepository.save(imagen);
+        ShowImageDto showImageDto = imagesRepository.findShowImageId(imagenRes.getId()).orElseThrow();
+        showImageDto.setLikes(0L);
+        showImageDto.setUserLike(false);
+        showImageDto.setComments(0L);
+        return showImageDto;
     }
 
     @Override

@@ -23,5 +23,4 @@ public interface FollowingRepository extends CrudRepository<Following, Long> {
     @Query("select count(f) From Following f where f.user2.id=?1")
     Long countFollowers(Long id);
 
-
 }
