@@ -1,5 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
+import { socialExtraReducer } from "./extraReducer/socialExtraReducer";
 
 const initialState:InitialStateSocial = {
     imagenes: [],
@@ -45,6 +46,14 @@ const socialSlice = createSlice({
         resetImagen(state){
             state.oneImage = initialState.oneImage;
         }
+    },
+    extraReducers:builder => {
+        builder.addCase(socialExtraReducer.findAllImages.fulfilled, (state, action)=>{
+            state.imagenes = action.payload;
+        });
+        builder.addCase(socialExtraReducer.findAllImages.rejected, (state)=>{
+            state.imagenes = [];
+        })
     }
 });
 

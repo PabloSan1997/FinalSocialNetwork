@@ -35,6 +35,14 @@ const PageRoutes = () => useRoutes([
         path: '/home',
         element: (
             <RedirectToken>
+                <Navigate to={'/home/0'}/>
+            </RedirectToken>
+        )
+    },
+    {
+        path:'/home/:page',
+        element:(
+            <RedirectToken>
                 <Home />
             </RedirectToken>
         )

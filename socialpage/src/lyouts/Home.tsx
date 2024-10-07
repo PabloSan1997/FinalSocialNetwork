@@ -1,8 +1,11 @@
+import { ImageContainer } from "../components/ImageContainer";
 
 
-export  function Home() {
+export function Home() {
   document.title = 'Home';
   return (
-    <div>Home</div>
+    <>
+      <ImageContainer />
+    </>
   );
 }

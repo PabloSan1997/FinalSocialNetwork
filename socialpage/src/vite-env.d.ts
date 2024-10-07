@@ -91,7 +91,7 @@ interface ShowImages {
     id: string;
     urlImage: string;
     description: string;
-    createAt: Date;
+    createAt: string;
     username: string;
     nickname: string;
     urlPerfil: string;

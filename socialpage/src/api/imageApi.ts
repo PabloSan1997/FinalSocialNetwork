@@ -4,7 +4,7 @@ import { propsApi } from "./propsApi";
 export class ImageApi{
     async readImages(token:string, username:string|null, page = 0, size = 10):Promise<ShowImages[]>{
         const urlSend = !username?`/images?page=${page}&size=${size}`:`/images/user?username=${username}&page=${page}&size=${size}`;
-        const ft = await fetch(urlSend, {
+        const ft = await fetch(`${propsApi.baseUrl+urlSend}`, {
             method:'GET',
             headers:{
                 ...propsApi.onlyAuth(token)

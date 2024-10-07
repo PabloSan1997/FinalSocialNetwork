@@ -62,6 +62,11 @@ const authSlice = createSlice({
             state.messageRegister = '';
             state.id = action.payload.id;
         });
+        builder.addCase(authExtreReducer.userInfo.rejected, (state)=>{
+            state.token = '';
+            socialStorage.save('');
+            state.username = '';
+        });
     }
 });
 

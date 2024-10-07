@@ -95,8 +95,8 @@ export class UserApi {
         return ft.json();
     }
     async getUserInfo(token:string, username:string|null=null):Promise<ShowUserInfo>{
-        const baseUrl = !username?'user/userInfo':`user/otherUser?username=${username}`;
-        const ft = await fetch(baseUrl, {
+        const baseUrl = !username?'/user/userInfo':`/user/otherUser?username=${username}`;
+        const ft = await fetch(`${propsApi.baseUrl+baseUrl}`, {
             method: 'GET',
             headers: {
                 ...propsApi.onlyAuth(token)

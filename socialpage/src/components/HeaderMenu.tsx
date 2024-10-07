@@ -8,6 +8,7 @@ import { authExtreReducer } from "../slices/extraReducer/authExtreReducer";
 export function HeaderMenu() {
     const stateAuth = useAppSelector(state => state.authReducer);
     const dispatch = useAppDispatch();
+
     useEffect(() => {
         if (stateAuth.token.trim())
             dispatch(authExtreReducer.userInfo({ token: stateAuth.token }));
