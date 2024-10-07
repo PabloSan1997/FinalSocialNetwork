@@ -41,7 +41,7 @@ export const authExtreReducer = {
         'extra-reducer/userInfo',
         async ({token}:{token:string}) =>{
             try {
-                return userApi.userInfo(token);
+                return userApi.getUserInfo(token);
             } catch (error) {
                 const arr = error as ErroDto;
                 throw {message:arr.message}

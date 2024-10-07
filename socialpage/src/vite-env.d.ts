@@ -150,7 +150,7 @@ interface AddComent {
 
 interface CommentResponse {
     id: number;
-    createAt: Date;
+    createAt: string;
     comment: string;
     user: {
         username: string;

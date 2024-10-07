@@ -39,17 +39,6 @@ export class UserApi {
         if (!ft.ok)
             throw await ft.json() as ErroDto;
     }
-    async userInfo(token: string): Promise<ShowUserInfo> {
-        const ft = await fetch(`${propsApi.baseUrl}/user/userInfo`, {
-            method: 'GET',
-            headers: {
-                ...propsApi.onlyAuth(token)
-            }
-        });
-        if (!ft.ok)
-            throw await ft.json() as ErroDto;
-        return ft.json();
-    }
     async userFollow(token: string, username: string): Promise<ResponseFollowing> {
         const ft = await fetch(`${propsApi.baseUrl}/user/follow/followUser?username=${username}`, {
             method: 'GET',
@@ -105,7 +94,7 @@ export class UserApi {
             throw await ft.json() as ErroDto;
         return ft.json();
     }
-    async getUserInfo(token:string, username:string|null):Promise<ShowUserInfo>{
+    async getUserInfo(token:string, username:string|null=null):Promise<ShowUserInfo>{
         const baseUrl = !username?'user/userInfo':`user/otherUser?username=${username}`;
         const ft = await fetch(baseUrl, {
             method: 'GET',

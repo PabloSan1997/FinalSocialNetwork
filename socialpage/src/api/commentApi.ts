@@ -2,7 +2,7 @@ import { propsApi } from "./propsApi";
 
 
 export class CommentApi{
-    async saveComment(token:string,comment:AddComent):Promise<Comment>{
+    async saveComment(token:string,comment:AddComent):Promise<CommentResponse>{
         const ft = await fetch(`${propsApi.baseUrl}/comments`, {
             method:'POST',
             headers:{
