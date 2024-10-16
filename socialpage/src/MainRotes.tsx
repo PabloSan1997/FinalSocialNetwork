@@ -4,6 +4,8 @@ import { useAppSelector } from "./store/hooks";
 import { Home } from "./lyouts/Home";
 import { Header } from "./components/Header";
 import { Perfil } from "./lyouts/Perfil";
+import { OneImage } from "./lyouts/OneImage";
+import { PerfilFriend } from "./lyouts/PerfilFriend";
 
 
 const MainRedirect = () => {
@@ -52,6 +54,22 @@ const PageRoutes = () => useRoutes([
         element:(
             <RedirectToken>
                 <Perfil />
+            </RedirectToken>
+        )
+    },
+    {
+        path:'/perfilFriend',
+        element:(
+            <RedirectToken>
+                <PerfilFriend/>
+            </RedirectToken>
+        )
+    },
+    {
+        path:'/oneImage',
+        element:(
+            <RedirectToken>
+                <OneImage/>
             </RedirectToken>
         )
     }

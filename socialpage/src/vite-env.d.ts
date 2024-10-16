@@ -5,6 +5,7 @@ type Children = {
     children: JSX.Element | JSX.Element[]
 }
 
+
 interface InitialStateAuthentication {
     username: string;
     messageLogin: string;
@@ -13,11 +14,11 @@ interface InitialStateAuthentication {
     messageRegister: string;
 }
 
-interface InitialStateSocial{
-    imagenes:ShowImages[],
-    oneImage:ShowOneImage,
-    showUserInfo:ShowUserInfo
-    followUser:boolean
+interface InitialStateSocial {
+    imagenes: ShowImages[],
+    oneImage: ShowOneImage,
+    showUserInfo: ShowUserInfo
+    followUser: boolean
 }
 
 
@@ -36,6 +37,11 @@ interface ShowUserInfo {
     urlPerfil: string;
     following: number;
     followers: number;
+}
+
+interface ShowPerfil{
+    showUserInfo:ShowUserInfo;
+    images:ShowImages[];
 }
 
 
@@ -105,11 +111,7 @@ interface ShowOneImage {
     urlImage: string;
     description: string;
     createAt: string;
-    user: {
-        username: string;
-        nickname: string;
-        userInfo: UserInfo;
-    }
+    user: UserImage;
     comments: CommentInterface[];
     likes: number;
     userLike: boolean;
@@ -119,11 +121,13 @@ interface CommentInterface {
     id: number;
     createAt: stirng;
     comment: string;
-    user: {
-        username: string;
-        nickname: string;
-        userInfo: UserInfo;
-    }
+    user: UserImage
+}
+
+interface UserImage {
+    username: string;
+    nickname: string;
+    userInfo: UserInfo;
 }
 
 interface UserInfo {
@@ -152,9 +156,12 @@ interface CommentResponse {
     id: number;
     createAt: string;
     comment: string;
-    user: {
-        username: string;
-        nickname: string;
-        userInfo: UserInfo;
-    }
+    user: UserImage
+}
+
+interface ShowImageUser{
+    userInfo:UserInfo,
+    createAt:string;
+    username:string;
+    nickname:string;
 }

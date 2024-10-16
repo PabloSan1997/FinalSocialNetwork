@@ -12,7 +12,6 @@ export function ImageContainer() {
     const dispatch = useAppDispatch();
     const params = useParams();
     const page:number = Number(params.page)? Number(params.page):0;
-    console.log(page);
     useEffect(() => {
         if (stateAuth.token.trim())
             dispatch(socialExtraReducer.findAllImages({ token: stateAuth.token , page}));

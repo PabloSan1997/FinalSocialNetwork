@@ -1,6 +1,7 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { socialExtraReducer } from "./extraReducer/socialExtraReducer";
+import { authExtreReducer } from "./extraReducer/authExtreReducer";
 
 const initialState:InitialStateSocial = {
     imagenes: [],
@@ -53,7 +54,21 @@ const socialSlice = createSlice({
         });
         builder.addCase(socialExtraReducer.findAllImages.rejected, (state)=>{
             state.imagenes = [];
-        })
+        });
+
+        builder.addCase(socialExtraReducer.findOneImage.fulfilled, (state, action)=>{
+            state.oneImage = action.payload;
+        });
+
+        builder.addCase(authExtreReducer.userInfo.fulfilled, (state, action)=>{
+            state.showUserInfo = action.payload;
+        });
+        builder.addCase(socialExtraReducer.getUserInfoFriend.fulfilled, (state, action)=>{
+            state.showUserInfo = action.payload;
+        });
+        builder.addCase(socialExtraReducer.findFriendAllImages.fulfilled, (state, aciton)=>{
+            state.imagenes = aciton.payload;
+        });
     }
 });
 
