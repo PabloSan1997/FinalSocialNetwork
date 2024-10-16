@@ -14,7 +14,7 @@ export function Perfil() {
   const authState = useAppSelector(state => state.authReducer);
   useEffect(()=>{
     dispatch(authExtreReducer.userInfo({token:authState.token}));
-    dispatch(socialExtraReducer.findFriendAllImages({page:0, username:showUserInfo.username, token:authState.token}));
+    dispatch(socialExtraReducer.findFriendAllImages({page:0, username:authState.username, token:authState.token}));
     document.title = 'Perfil | '+socialState.showUserInfo.username;
   },[]);
   return (

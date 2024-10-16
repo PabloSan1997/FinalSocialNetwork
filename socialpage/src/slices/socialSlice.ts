@@ -49,6 +49,7 @@ const socialSlice = createSlice({
         }
     },
     extraReducers:builder => {
+        //Images and userinfo
         builder.addCase(socialExtraReducer.findAllImages.fulfilled, (state, action)=>{
             state.imagenes = action.payload;
         });
@@ -56,6 +57,7 @@ const socialSlice = createSlice({
             state.imagenes = [];
         });
 
+        
         builder.addCase(socialExtraReducer.findOneImage.fulfilled, (state, action)=>{
             state.oneImage = action.payload;
         });
@@ -69,6 +71,25 @@ const socialSlice = createSlice({
         builder.addCase(socialExtraReducer.findFriendAllImages.fulfilled, (state, aciton)=>{
             state.imagenes = aciton.payload;
         });
+
+        //Comments
+        builder.addCase(socialExtraReducer.commentImage.fulfilled, (state, action)=>{
+            const comments = state.oneImage.comments;
+            state.oneImage.comments = [action.payload, ...comments];
+        });
+
+        //Likes
+        builder.addCase(socialExtraReducer.generateLike.fulfilled, (state, action)=>{
+            const res = action.payload
+            const index = state.imagenes.findIndex(im => im.id == res.idImage);
+            state.imagenes[index].likes = res.countLikes;
+            state.imagenes[index].userLike = res.userLike;
+
+            if(state.oneImage.id == res.idImage){
+                state.oneImage.likes = res.countLikes;
+                state.oneImage.userLike = res.userLike;
+            }
+        })
     }
 });
 

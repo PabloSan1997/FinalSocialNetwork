@@ -50,7 +50,7 @@ export class ImageApi{
     }
     async addLikeImage(token:string, id:string):Promise<LikeImageDto>{
         const ft = await fetch(`${propsApi.baseUrl}/images/like/${id}`, {
-            method:'GET',
+            method:'POST',
             headers:{
                 ...propsApi.onlyAuth(token)
             }

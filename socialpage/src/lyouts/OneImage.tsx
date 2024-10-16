@@ -5,6 +5,8 @@ import { socialExtraReducer } from "../slices/extraReducer/socialExtraReducer";
 import { useSearchParams } from "react-router-dom";
 import { ImageUserPart } from "../components/ImageUserPart";
 import { Comments } from "../components/Comments";
+import CommentFrom from "../components/CommentFrom";
+import { LikeSection } from "../components/LikeSection";
 
 
 export function OneImage() {
@@ -26,9 +28,10 @@ export function OneImage() {
             <p>{oneImage.description}</p>
             <img src={oneImage.urlImage} alt={userImageInfo.username} />
             <div className="image_info">
-                <span>Likes: {oneImage.likes}</span>
+                <LikeSection idImage={oneImage.id} countLikes={oneImage.likes} userLike={oneImage.userLike}/>
             </div>
             <div className="area_comments">
+                <CommentFrom idImage={oneImage.id}/>
                 <h2>Comentarios</h2>
                 {comment.map(c => (
                     <Comments key={c.id} {...c}/>

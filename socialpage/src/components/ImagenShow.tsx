@@ -1,5 +1,6 @@
 import { useNavigate } from 'react-router-dom';
 import { ImageUserPart } from "./ImageUserPart";
+import { LikeSection } from './LikeSection';
 
 export function ImagenShow(imageInfo: ShowImages) {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ export function ImagenShow(imageInfo: ShowImages) {
       <img src={imageInfo.urlImage} alt={imageInfo.username} onClick={() => navigate(`/oneImage?datos=${imageInfo.id}`)} />
       <div className="image_info">
         <span>Comments: {imageInfo.comments}</span>
-        <span>Likes: {imageInfo.likes}</span>
+        <LikeSection idImage={imageInfo.id} userLike={imageInfo.userLike} countLikes={imageInfo.likes}/>
       </div>
     </div>
   );
