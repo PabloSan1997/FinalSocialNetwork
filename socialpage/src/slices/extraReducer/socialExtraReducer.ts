@@ -107,6 +107,17 @@ export const socialExtraReducer = {
             }
         }
     ),
+    getMyOnwUser: createAsyncThunk(
+            'extraReducer/MyUserInfo',
+            async ({ token }: { token: string}) => {
+                try {
+                    return userApi.getUserInfo(token);
+                } catch (error) {
+                    const err = error as ErroDto;
+                    throw { meesage: err.message };
+                }
+            }
+    ),
     isFollowingUser: createAsyncThunk(
         'extraReducer/isFollowingUser',
         async ({ token, username }: { token: string, username: string }) => {
@@ -145,6 +156,17 @@ export const socialExtraReducer = {
         async ({ token, id }: { token: string, id: number }) => {
             try {
                 return userApi.countFollowing(token, id);
+            } catch (error) {
+                const err = error as ErroDto;
+                throw { meesage: err.message };
+            }
+        }
+    ),
+    generateFollow:createAsyncThunk(
+        'extraReducer/generateFollowing',
+        async ({ token, id }: { token: string, id: number }) => {
+            try {
+                return userApi.addFollowing(token, id);
             } catch (error) {
                 const err = error as ErroDto;
                 throw { meesage: err.message };

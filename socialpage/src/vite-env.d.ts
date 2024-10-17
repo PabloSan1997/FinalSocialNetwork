@@ -44,7 +44,6 @@ interface ShowPerfil{
     images:ShowImages[];
 }
 
-
 interface Users {
     id: number,
     username: string,

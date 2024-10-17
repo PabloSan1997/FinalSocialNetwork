@@ -1,7 +1,6 @@
 
 import { createSlice } from "@reduxjs/toolkit";
 import { socialExtraReducer } from "./extraReducer/socialExtraReducer";
-import { authExtreReducer } from "./extraReducer/authExtreReducer";
 
 const initialState:InitialStateSocial = {
     imagenes: [],
@@ -62,7 +61,7 @@ const socialSlice = createSlice({
             state.oneImage = action.payload;
         });
 
-        builder.addCase(authExtreReducer.userInfo.fulfilled, (state, action)=>{
+        builder.addCase(socialExtraReducer.getMyOnwUser.fulfilled, (state, action)=>{
             state.showUserInfo = action.payload;
         });
         builder.addCase(socialExtraReducer.getUserInfoFriend.fulfilled, (state, action)=>{
@@ -89,6 +88,18 @@ const socialSlice = createSlice({
                 state.oneImage.likes = res.countLikes;
                 state.oneImage.userLike = res.userLike;
             }
+        });
+
+        //follow funcitons
+        builder.addCase(socialExtraReducer.isFollowingUser.fulfilled, (state, action)=>{
+            state.followUser = action.payload.followingThisUser;
+        });
+        builder.addCase(socialExtraReducer.generateFollow.fulfilled, (state, action)=>{
+            state.followUser = action.payload.followingThisUser;
+        });
+        builder.addCase(socialExtraReducer.countFollowing.fulfilled, (state, action)=>{
+            state.showUserInfo.followers = action.payload.followers;
+            state.showUserInfo.following = action.payload.following;
         })
     }
 });

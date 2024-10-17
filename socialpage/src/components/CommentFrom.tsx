@@ -12,6 +12,7 @@ export default function CommentFrom({ idImage }: { idImage: string }) {
         e.preventDefault();
         if (comment.trim())
             dispatch(socialExtraReducer.commentImage({ token: authStated.token, addComment: { comment, idImage } }))
+        .then(()=>{setComment('');})
     }
     return (
         <form className="comment_form" onSubmit={submit}>

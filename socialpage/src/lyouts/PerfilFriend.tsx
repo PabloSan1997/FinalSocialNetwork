@@ -9,7 +9,6 @@ import { useSearchParams } from "react-router-dom";
 import { ShowPerfil } from "../components/ShowPerfil";
 
 export function PerfilFriend() {
-    document.title = 'Perfil';
     const [searchParams] = useSearchParams();
     const username = searchParams.get('name');
     const dispatch = useAppDispatch();
@@ -18,12 +17,15 @@ export function PerfilFriend() {
     const authState = useAppSelector(state => state.authReducer);
 
     useEffect(() => {
-        if (username) {
-            dispatch(socialExtraReducer.getUserInfoFriend({ username, token: authState.token }));
-            dispatch(socialExtraReducer.findFriendAllImages({ page: 0, username, token: authState.token }));
-            document.title = 'Perfil|'+socialState.showUserInfo.username;
+        if (username && authState.username) {
+            dispatch(socialExtraReducer.getUserInfoFriend({ username, token: authState.token })).then(() => {
+                dispatch(socialExtraReducer.findFriendAllImages({ page: 0, username, token: authState.token }));
+                dispatch(socialExtraReducer.isFollowingUser({ token: authState.token, username }));
+                document.title = 'Person|' + socialState.showUserInfo.username;
+            });
+
         }
-    }, [username]);
+    }, [username, authState.username]);
     return (
         <ShowPerfil showUserInfo={showUserInfo} images={socialState.imagenes} />
     );
