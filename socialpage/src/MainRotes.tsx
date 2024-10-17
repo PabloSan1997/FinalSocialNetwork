@@ -6,6 +6,7 @@ import { Header } from "./components/Header";
 import { Perfil } from "./lyouts/Perfil";
 import { OneImage } from "./lyouts/OneImage";
 import { PerfilFriend } from "./lyouts/PerfilFriend";
+import { FollowList } from "./lyouts/FollowList";
 
 
 const MainRedirect = () => {
@@ -62,6 +63,22 @@ const PageRoutes = () => useRoutes([
         element:(
             <RedirectToken>
                 <PerfilFriend/>
+            </RedirectToken>
+        )
+    },
+    {
+        path:'/followings',
+        element:(
+            <RedirectToken>
+                <FollowList isFollowing={true}/>
+            </RedirectToken>
+        )
+    },
+    {
+        path:'/followers',
+        element:(
+            <RedirectToken>
+                <FollowList isFollowing={false}/>
             </RedirectToken>
         )
     },

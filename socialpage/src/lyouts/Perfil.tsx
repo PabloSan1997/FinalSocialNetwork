@@ -15,10 +15,10 @@ export function Perfil() {
   useEffect(() => {
       dispatch(socialExtraReducer.getMyOnwUser({ token: authState.token }));
       dispatch(socialExtraReducer.findFriendAllImages({ page: 0, username: authState.username, token: authState.token }));
-      document.title = 'Perfil | ' + socialState.showUserInfo.username;
+      document.title = 'Perfil | ' + authState.username;
     
   }, [authState.username]);
   return (
-    <ShowPerfil showUserInfo={showUserInfo} images={socialState.imagenes} />
+    <ShowPerfil showUserInfo={showUserInfo} images={socialState.imagenes} isMainPerfil={true}/>
   );
 }

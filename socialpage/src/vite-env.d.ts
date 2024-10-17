@@ -18,9 +18,9 @@ interface InitialStateSocial {
     imagenes: ShowImages[],
     oneImage: ShowOneImage,
     showUserInfo: ShowUserInfo
-    followUser: boolean
+    followUser: boolean;
+    listFollow:FollowsResponseUser;
 }
-
 
 interface ErroDto {
     error: string;
@@ -42,6 +42,7 @@ interface ShowUserInfo {
 interface ShowPerfil{
     showUserInfo:ShowUserInfo;
     images:ShowImages[];
+    isMainPerfil:boolean;
 }
 
 interface Users {

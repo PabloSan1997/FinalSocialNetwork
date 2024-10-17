@@ -72,8 +72,9 @@ export class UserApi {
             throw await ft.json() as ErroDto;
         return ft.json();
     }
-    async getFollowers(token: string, id: number, page = 0, size = 10): Promise<FollowsResponseUser> {
-        const ft = await fetch(`${propsApi.baseUrl}/user/follow/find/followers/${id}?page=${page}&size=${size}`, {
+    async getFollowers(token: string, username:string, page = 0, size = 10): Promise<FollowsResponseUser> {
+        const data = await this.getUserInfo(token, username);
+        const ft = await fetch(`${propsApi.baseUrl}/user/follow/find/followers/${data.id}?page=${page}&size=${size}`, {
             method: 'GET',
             headers: {
                 ...propsApi.onlyAuth(token)
@@ -83,8 +84,9 @@ export class UserApi {
             throw await ft.json() as ErroDto;
         return ft.json();
     }
-    async getFollowings(token: string, id: number, page = 0, size = 10): Promise<FollowsResponseUser> {
-        const ft = await fetch(`${propsApi.baseUrl}/user/follow/find/followings/${id}}?page=${page}&size=${size}`, {
+    async getFollowings(token: string, username:string, page = 0, size = 10): Promise<FollowsResponseUser> {
+        const data = await this.getUserInfo(token, username);
+        const ft = await fetch(`${propsApi.baseUrl}/user/follow/find/followings/${data.id}?page=${page}&size=${size}`, {
             method: 'GET',
             headers: {
                 ...propsApi.onlyAuth(token)

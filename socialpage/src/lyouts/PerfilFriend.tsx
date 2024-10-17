@@ -21,12 +21,12 @@ export function PerfilFriend() {
             dispatch(socialExtraReducer.getUserInfoFriend({ username, token: authState.token })).then(() => {
                 dispatch(socialExtraReducer.findFriendAllImages({ page: 0, username, token: authState.token }));
                 dispatch(socialExtraReducer.isFollowingUser({ token: authState.token, username }));
-                document.title = 'Person|' + socialState.showUserInfo.username;
+                document.title = 'Person | ' + socialState.showUserInfo.username;
             });
 
         }
     }, [username, authState.username]);
     return (
-        <ShowPerfil showUserInfo={showUserInfo} images={socialState.imagenes} />
+        <ShowPerfil showUserInfo={showUserInfo} images={socialState.imagenes} isMainPerfil={false}/>
     );
 }

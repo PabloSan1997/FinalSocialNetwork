@@ -131,9 +131,9 @@ export const socialExtraReducer = {
     ),
     getFollowers: createAsyncThunk(
         'extraReducer/getFollowers',
-        async ({ token, page, id }: { token: string, page: number, id: number }) => {
+        async ({ token, page, username }: { token: string, page: number, username:string }) => {
             try {
-                return userApi.getFollowers(token, id, page)
+                return userApi.getFollowers(token, username, page)
             } catch (error) {
                 const err = error as ErroDto;
                 throw { meesage: err.message };
@@ -142,9 +142,9 @@ export const socialExtraReducer = {
     ),
     getFollowings: createAsyncThunk(
         'extraReducer/getFollowings',
-        async ({ token, page, id }: { token: string, page: number, id: number }) => {
+        async ({ token, page, username }: { token: string, page: number, username:string }) => {
             try {
-                return userApi.getFollowings(token, id, page)
+                return userApi.getFollowings(token, username, page)
             } catch (error) {
                 const err = error as ErroDto;
                 throw { meesage: err.message };
