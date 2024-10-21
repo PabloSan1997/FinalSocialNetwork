@@ -7,10 +7,12 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { socialExtraReducer } from "../slices/extraReducer/socialExtraReducer";
 import { useSearchParams } from "react-router-dom";
 import { ShowPerfil } from "../components/ShowPerfil";
+import { HomeNextComponent } from "../components/HomeNextComponent";
 
 export function PerfilFriend() {
     const [searchParams] = useSearchParams();
     const username = searchParams.get('name');
+    const page = Number(searchParams.get('page'));
     const dispatch = useAppDispatch();
     const socialState = useAppSelector(state => state.socialReducer);
     const { showUserInfo } = socialState;
@@ -25,8 +27,11 @@ export function PerfilFriend() {
             });
 
         }
-    }, [username, authState.username]);
+    }, [username, authState.username, page]);
     return (
-        <ShowPerfil showUserInfo={showUserInfo} images={socialState.imagenes} isMainPerfil={false}/>
+        <>
+            <ShowPerfil showUserInfo={showUserInfo} images={socialState.imagenes} isMainPerfil={false} />
+            <HomeNextComponent pathbase={`/perfilFriend?name=${socialState.showUserInfo.username}&page=`} page={page} />
+        </>
     );
 }

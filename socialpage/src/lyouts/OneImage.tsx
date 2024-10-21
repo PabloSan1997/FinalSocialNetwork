@@ -7,6 +7,7 @@ import { ImageUserPart } from "../components/ImageUserPart";
 import { Comments } from "../components/Comments";
 import CommentFrom from "../components/CommentFrom";
 import { LikeSection } from "../components/LikeSection";
+import { HomeNextComponent } from "../components/HomeNextComponent";
 
 
 export function OneImage() {
@@ -18,10 +19,11 @@ export function OneImage() {
     const stateAuth = useAppSelector(state => state.authReducer);
     const [searchParams] = useSearchParams();
     const findText = searchParams.get('datos');
+    const page = Number(searchParams.get('page'));
     useEffect(() => {
         if (findText)
-            dispatch(socialExtraReducer.findOneImage({ token: stateAuth.token, idImage: findText, pageComment: 0 }));
-    }, [findText]);
+            dispatch(socialExtraReducer.findOneImage({ token: stateAuth.token, idImage: findText, pageComment: page }));
+    }, [findText, page]);
     return (
         <div className="area_perfil">
             <ImageUserPart {...userImageInfo} createAt={oneImage.createAt} />
@@ -37,6 +39,7 @@ export function OneImage() {
                     <Comments key={c.id} {...c}/>
                 ))}
             </div>
+            <HomeNextComponent pathbase={`/oneImage?datos=${findText}&page=`} page={page}/>
         </div>
     );
 }
