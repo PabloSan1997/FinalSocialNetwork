@@ -12,7 +12,7 @@ export function Home() {
     <>
       <FormAddImage/>
       <ImageContainer />
-      <HomeNextComponent pathbase="/home/" page={Number(params.page)}/>
+      <HomeNextComponent pathbase="/home/" page={Number(params.page)} className="next_home"/>
     </>
   );
 }

@@ -27,7 +27,7 @@ export function Perfil() {
   return (
     <>
       <ShowPerfil showUserInfo={showUserInfo} images={socialState.imagenes} isMainPerfil={true} />
-      <HomeNextComponent pathbase="/perfil?page=" page={page}/>
+      <HomeNextComponent pathbase="/perfil?page=" page={page} className="next_perfil"/>
     </>
   );
 }

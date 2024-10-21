@@ -39,7 +39,7 @@ export function OneImage() {
                     <Comments key={c.id} {...c}/>
                 ))}
             </div>
-            <HomeNextComponent pathbase={`/oneImage?datos=${findText}&page=`} page={page}/>
+            <HomeNextComponent pathbase={`/oneImage?datos=${findText}&page=`} page={page} className="next_comments"/>
         </div>
     );
 }

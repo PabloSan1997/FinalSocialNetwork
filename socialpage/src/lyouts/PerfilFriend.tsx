@@ -31,7 +31,11 @@ export function PerfilFriend() {
     return (
         <>
             <ShowPerfil showUserInfo={showUserInfo} images={socialState.imagenes} isMainPerfil={false} />
-            <HomeNextComponent pathbase={`/perfilFriend?name=${socialState.showUserInfo.username}&page=`} page={page} />
+            <HomeNextComponent
+                pathbase={`/perfilFriend?name=${socialState.showUserInfo.username}&page=`}
+                page={page}
+                className="next_perfil"
+            />
         </>
     );
 }
