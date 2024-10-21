@@ -13,6 +13,7 @@ import { HomeNextComponent } from "../components/HomeNextComponent";
 export function OneImage() {
     const dispatch = useAppDispatch();
     const stateSocial = useAppSelector(state => state.socialReducer);
+    const authState = useAppSelector(state => state.authReducer);
     const oneImage = stateSocial.oneImage;
     const comment = stateSocial.oneImage.comments;
     const userImageInfo = oneImage.user;
@@ -20,6 +21,10 @@ export function OneImage() {
     const [searchParams] = useSearchParams();
     const findText = searchParams.get('datos');
     const page = Number(searchParams.get('page'));
+    const borrar = () =>{
+        if(confirm('¿Seguro que desea borrar la imagen?'))
+        dispatch(socialExtraReducer.deleteImage({token:authState.token, id:oneImage.id}));
+    }
     useEffect(() => {
         if (findText)
             dispatch(socialExtraReducer.findOneImage({ token: stateAuth.token, idImage: findText, pageComment: page }));
@@ -27,6 +32,7 @@ export function OneImage() {
     return (
         <div className="area_perfil">
             <ImageUserPart {...userImageInfo} createAt={oneImage.createAt} />
+            {authState.username === oneImage.user.username && <button onClick={borrar}>X</button>}
             <p>{oneImage.description}</p>
             <img src={oneImage.urlImage} alt={userImageInfo.username} />
             <div className="image_info">

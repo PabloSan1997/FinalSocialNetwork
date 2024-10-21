@@ -1,9 +1,17 @@
 import { useNavigate } from 'react-router-dom';
 import { ImageUserPart } from "./ImageUserPart";
 import { LikeSection } from './LikeSection';
+import { useAppDispatch, useAppSelector } from '../store/hooks';
+import { socialExtraReducer } from '../slices/extraReducer/socialExtraReducer';
 
 export function ImagenShow(imageInfo: ShowImages) {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const authState = useAppSelector(state => state.authReducer);
+  const borrar = () =>{
+    if(confirm('¿Seguro que desea borrar la imagen?'))
+    dispatch(socialExtraReducer.deleteImage({token:authState.token, id:imageInfo.id}));
+  }
   return (
     <div className="image_show">
       <ImageUserPart
@@ -12,6 +20,7 @@ export function ImagenShow(imageInfo: ShowImages) {
         userInfo={{ urlPerfil: imageInfo.urlPerfil, id: 0 }}
         createAt={imageInfo.createAt}
       />
+      {authState.username == imageInfo.username && <button onClick={borrar}>X</button>}
       <p className="description">{imageInfo.description}</p>
       <img src={imageInfo.urlImage} alt={imageInfo.username} onClick={() => navigate(`/oneImage?datos=${imageInfo.id}`)} />
       <div className="image_info">

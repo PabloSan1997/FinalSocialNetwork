@@ -60,6 +60,10 @@ const socialSlice = createSlice({
             const images = state.imagenes;
             state.imagenes = [aciton.payload, ...images];
         });
+        builder.addCase(socialExtraReducer.deleteImage.fulfilled, (state, action)=>{
+            const images = state.imagenes.filter(p => p.id !== action.payload.id);
+            state.imagenes = images;
+        });
         builder.addCase(socialExtraReducer.findOneImage.fulfilled, (state, action) => {
             state.oneImage = action.payload;
         });
@@ -78,6 +82,9 @@ const socialSlice = createSlice({
         builder.addCase(socialExtraReducer.commentImage.fulfilled, (state, action) => {
             const comments = state.oneImage.comments;
             state.oneImage.comments = [action.payload, ...comments];
+        });
+        builder.addCase(socialExtraReducer.deleteComment.fulfilled, (state, action)=>{
+            state.oneImage.comments = state.oneImage.comments.filter(c => c.id !== action.payload.id);
         });
 
         //Likes
