@@ -1,0 +1,20 @@
+
+
+.image_user{
+    display: flex;
+    img{
+        width: 5rem;
+        height: 5rem;
+        border-radius: 100%;
+    }
+    .area_user_info{
+        margin-left: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        .fecha{
+            font-size: 0.8rem;
+        }
+    }
+    
+}

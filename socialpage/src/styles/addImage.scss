@@ -1,0 +1,54 @@
+@import 'colors.scss';
+
+.add_form {
+    display: flex;
+    flex-direction: column;
+    width: 95%;
+    margin: 1rem auto 2rem;
+    padding: 0.5rem;
+    background: $maincolor-900;
+    border-radius: 5px;
+    box-shadow: 2px 2px 5px black;
+
+    textarea {
+        padding: 0.3rem;
+        box-sizing: border-box;
+        width: 100%;
+        resize: none;
+    }
+
+    input {
+        padding: 0.3rem;
+        box-sizing: border-box;
+        margin: 0.8rem 0;
+    }
+
+    button {
+        width: fit-content;
+        padding: 0.2rem 0.8rem;
+        margin-top: 0.5rem;
+        border: 3px solid $maincolor-300;
+        font-size: 1rem;
+        border-radius: 6px;
+        color: $maincolor-900;
+        background: $maincolor-100;
+        transition: background 0.3s ease;
+        cursor: pointer;
+        &:hover {
+            background: $maincolor-300;
+        }
+    }
+
+    input,
+    textarea {
+        background: $maincolor-50;
+        border: 1px solid $maincolor-500;
+        outline: none;
+        border-radius: 5px;
+        font-size: 1.2rem;
+
+        &::placeholder {
+            color: $maincolor-600;
+        }
+    }
+}

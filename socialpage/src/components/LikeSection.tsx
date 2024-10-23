@@ -1,6 +1,6 @@
 import { socialExtraReducer } from "../slices/extraReducer/socialExtraReducer";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-
+import { HeartIcon } from '@heroicons/react/24/solid';
 
 
 export  function LikeSection({userLike, countLikes, idImage}:LikeImageDto) {
@@ -10,6 +10,6 @@ export  function LikeSection({userLike, countLikes, idImage}:LikeImageDto) {
         dispatch(socialExtraReducer.generateLike({token:auttState.token, id:idImage}))
     }
   return (
-    <span onClick={generatelike}>likes: {countLikes} {userLike && 'likeado'}</span>
+    <span onClick={generatelike}><HeartIcon className={!userLike?'icono':'icono active'}/> {countLikes}</span>
   );
 }

@@ -1,8 +1,9 @@
+@import 'colors.scss';
 *{
     margin: 0;
     padding: 0;
 }
 
-img{ //borrar
-    max-width: 20rem;
+body{
+    background: $maincolor-50;
 }

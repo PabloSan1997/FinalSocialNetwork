@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { socialExtraReducer } from "../slices/extraReducer/socialExtraReducer";
 import { useParams } from "react-router-dom";
 import { ImagenShow } from "./ImagenShow";
-
+import '../styles/conainer.scss';
 
 export function ImageContainer() {
     const stateAuth = useAppSelector(state => state.authReducer);

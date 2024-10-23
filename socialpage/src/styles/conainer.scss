@@ -1,0 +1,61 @@
+@import 'colors.scss';
+
+.container{
+    width: 90%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    .image_show{
+        margin-bottom: 1rem;
+        display: flex;
+        flex-direction: column;
+        background:  $maincolor-100;
+        border: 2px solid $maincolor-300;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        position: relative;
+        .close{
+            width: 2rem;
+            color: $maincolor-500;
+            position: absolute;
+            right: 0.5rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            &:hover{
+                color: $maincolor-900;
+            }
+        }
+        .description{
+            width: 95%;
+            font-size: 1.2rem;
+            margin: 1rem auto 0.5rem 0;
+        }
+        .area_image{
+            display: flex;
+            width: 100%;
+            background: $maincolor-700;
+            margin-bottom: 1rem;
+            .imagen{
+                margin: auto;
+                max-height: 20rem;
+                cursor: pointer;
+            }
+        }
+        .image_info{
+            display: flex;
+            font-size: 1.2rem;
+            span{
+                margin-right: 0.5rem;
+                display: flex;
+                color: $maincolor-900;
+                .icono{
+                    width:1rem;
+                    margin-right: 0.3rem;
+                    &.active{
+                        color: red;
+                    }
+                }
+            }
+        }
+    }
+}

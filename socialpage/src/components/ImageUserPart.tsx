@@ -1,8 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import { converDate } from "../utils/convertDate";
 import { useAppSelector } from "../store/hooks";
-
-
+import '../styles/imageUser.scss';
 
 
 export function ImageUserPart({ userInfo, createAt, username, nickname }: ShowImageUser) {
@@ -20,7 +19,7 @@ export function ImageUserPart({ userInfo, createAt, username, nickname }: ShowIm
       <div className="area_user_info">
         <span>{nickname}</span>
         <span onClick={go}>@{username}</span>
-        <span>{converDate(createAt)}</span>
+        <span className="fecha">{converDate(createAt)}</span>
       </div>
     </div>
   );

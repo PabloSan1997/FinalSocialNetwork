@@ -1,6 +1,7 @@
 import { FormEvent, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { socialExtraReducer } from "../slices/extraReducer/socialExtraReducer";
+import '../styles/addImage.scss';
 
 const entryValues:AddOneImage = {
     urlImage: "",
@@ -25,6 +26,7 @@ export  function FormAddImage() {
         placeholder="Comparte algo nuevo"
         onChange={e => setData({...data, description:e.target.value})}
         value={data.description}
+        rows={3}
         ></textarea>
         <input 
         type="text" 
