@@ -39,6 +39,10 @@
                 margin: auto;
                 max-height: 20rem;
                 cursor: pointer;
+                transition: transform 0.2s ease;
+                &:hover{
+                    transform: scale(.9);
+                }
             }
         }
         .image_info{
@@ -51,6 +55,7 @@
                 .icono{
                     width:1rem;
                     margin-right: 0.3rem;
+                    user-select: none;
                     &.active{
                         color: red;
                     }

@@ -2,6 +2,8 @@
 
 
 export const converDate = (data:string):string =>{
-    const fecha = new Date(data);
-    return fecha.toLocaleString();
+    const newDate = new Date(data);
+    const fecha = newDate.toLocaleDateString();
+    const hora = newDate.toLocaleTimeString();
+    return `${fecha} ${hora}`;
 }

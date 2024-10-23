@@ -3,7 +3,7 @@ import { ImageUserPart } from "./ImageUserPart";
 import { LikeSection } from './LikeSection';
 import { useAppDispatch, useAppSelector } from '../store/hooks';
 import { socialExtraReducer } from '../slices/extraReducer/socialExtraReducer';
-import { ChatBubbleLeftIcon, XCircleIcon } from '@heroicons/react/24/solid'
+import { ChatBubbleLeftIcon, XCircleIcon } from '@heroicons/react/24/solid';
 
 export function ImagenShow(imageInfo: ShowImages) {
   const navigate = useNavigate();

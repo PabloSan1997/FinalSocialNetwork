@@ -8,7 +8,8 @@ import { Comments } from "../components/Comments";
 import CommentFrom from "../components/CommentFrom";
 import { LikeSection } from "../components/LikeSection";
 import { HomeNextComponent } from "../components/HomeNextComponent";
-
+import '../styles/oneImage.scss';
+import { XCircleIcon } from '@heroicons/react/24/solid'
 
 export function OneImage() {
     const dispatch = useAppDispatch();
@@ -30,11 +31,11 @@ export function OneImage() {
             dispatch(socialExtraReducer.findOneImage({ token: stateAuth.token, idImage: findText, pageComment: page }));
     }, [findText, page]);
     return (
-        <div className="area_perfil">
+        <div className="area_one_image">
             <ImageUserPart {...userImageInfo} createAt={oneImage.createAt} />
-            {authState.username === oneImage.user.username && <button onClick={borrar}>X</button>}
+            {authState.username === oneImage.user.username && <XCircleIcon onClick={borrar} className="close"/>}
             <p>{oneImage.description}</p>
-            <img src={oneImage.urlImage} alt={userImageInfo.username} />
+            <img src={oneImage.urlImage} alt={userImageInfo.username} className="image"/>
             <div className="image_info">
                 <LikeSection idImage={oneImage.id} countLikes={oneImage.likes} userLike={oneImage.userLike}/>
             </div>
