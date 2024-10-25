@@ -1,7 +1,7 @@
 import { socialExtraReducer } from "../slices/extraReducer/socialExtraReducer";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { ImageUserPart } from "./ImageUserPart";
-
+import { XCircleIcon } from '@heroicons/react/24/solid';
 
 
 export function Comments({user, comment, createAt, id}:CommentInterface) {
@@ -14,7 +14,7 @@ export function Comments({user, comment, createAt, id}:CommentInterface) {
   return (
     <div className="comment">
         <ImageUserPart {...user} createAt={createAt}/>
-        {authState.username == user.username && <button onClick={borrar}>X</button>}
+        {authState.username == user.username && <XCircleIcon onClick={borrar} className="icono"/>}
         <p>{comment}</p>
     </div>
   );

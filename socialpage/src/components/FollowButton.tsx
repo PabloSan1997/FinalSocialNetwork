@@ -1,7 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 
-
-import React from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { socialExtraReducer } from "../slices/extraReducer/socialExtraReducer";
 

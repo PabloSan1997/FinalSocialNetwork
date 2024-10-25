@@ -40,8 +40,8 @@ export function OneImage() {
                 <LikeSection idImage={oneImage.id} countLikes={oneImage.likes} userLike={oneImage.userLike}/>
             </div>
             <div className="area_comments">
+                <h2 className="title_comment">Comentarios</h2>
                 <CommentFrom idImage={oneImage.id}/>
-                <h2>Comentarios</h2>
                 {comment.map(c => (
                     <Comments key={c.id} {...c}/>
                 ))}

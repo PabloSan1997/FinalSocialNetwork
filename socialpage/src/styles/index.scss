@@ -7,3 +7,13 @@
 body{
     background: $maincolor-50;
 }
+.icono{
+    cursor: pointer;
+    transition: transform 0.3s ease;
+    &:hover{
+        transform: scale(1.2);
+    }
+    &:active{
+        transform: scale(1);
+    }
+}

@@ -29,6 +29,7 @@
         span{
             display: flex;
             color: $maincolor-900;
+            margin: auto;
             .icono{
                 width: 1.5rem;
                 margin-right: 0.3rem;
@@ -38,6 +39,102 @@
             }
             font-size: 1.5rem;
             user-select: none;
+        }
+    }
+    .area_comments{
+        margin: auto;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        background: $maincolor-900;
+        color: white;
+        border-radius: 0.5rem;
+        padding: 0.5rem;
+        box-sizing: border-box;
+        box-shadow: 2px 2px 5px $maincolor-900;
+        margin-bottom: 1rem;
+        .title_comment{
+            margin-bottom: 0.5rem;
+            border-bottom: 0.2px solid $maincolor-100;
+        }
+        .comment_form{
+            display: flex;
+            flex-direction: column;
+            width: 98%;
+            margin:0 auto 0.8rem;
+            label{
+                margin-bottom: 0.5rem;
+                font-size: 1.3rem;
+            }
+            .input_comment{
+                width: 100%;
+                margin: auto;
+                box-sizing: border-box;
+                padding: 0.3rem;
+                font-size: 1rem;
+                outline: none;
+                border: 2px solid $maincolor-950;
+                border-radius: 0.5rem;
+                background: $maincolor-100;
+                &::placeholder{
+                    color: $maincolor-800;
+                }
+            }
+            button{
+                margin: 0.5rem auto auto 0;
+                padding:0.2rem 0.5rem;
+                font-size: 1rem;
+                cursor: pointer;
+                border-radius: 0.5rem;
+                background: $maincolor-100;
+                color: $maincolor-950;
+                border: 2px solid $maincolor-950;
+                &:hover{
+                    background: $maincolor-200;
+                }
+                &:active{
+                    background: $maincolor-50;
+                }
+            }
+        }
+        .comment{
+            margin: 0.4rem 0;
+            background: $maincolor-950;
+            position: relative;
+            border-radius: 0.3rem;
+            p{
+                margin:0.5rem auto;
+                font-size: 1.2rem;
+                width: 98%;
+            }
+            .icono{
+                position: absolute;
+                width: 1.5rem;
+                right: 0.3rem;
+                top: 0.3rem;
+                color: $maincolor-500;
+            }
+            .perfil_user{
+                width: 98%;
+                margin:1rem auto 0;
+                img{
+                    width: 3rem;
+                    height: 3rem;
+                }
+                .area_user_info{
+                    span{
+                        &.nickname{
+                            font-size: 1.1rem;
+                        }
+                        color: $maincolor-50;
+                        font-size: 0.8rem;
+                        &.fecha{
+                            margin-top: 0.2rem;
+                            font-size: 0.7rem;
+                        }
+                    }
+                }
+            }
         }
     }
 }
