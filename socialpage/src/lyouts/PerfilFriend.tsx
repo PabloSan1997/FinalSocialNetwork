@@ -27,7 +27,7 @@ export function PerfilFriend() {
             });
 
         }
-    }, [username, authState.username, page]);
+    }, [username, authState.username, page, socialState.showUserInfo.username]);
     return (
         <>
             <ShowPerfil showUserInfo={showUserInfo} images={socialState.imagenes} isMainPerfil={false} />

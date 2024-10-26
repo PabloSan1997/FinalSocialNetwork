@@ -4,8 +4,7 @@ import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { socialExtraReducer } from "../slices/extraReducer/socialExtraReducer";
 import { Navigate, useSearchParams } from "react-router-dom";
 import UserFollow from "../components/UserFollow";
-
-
+import '../styles/followList.scss';
 
 
 export function FollowList({ isFollowing }: { isFollowing: boolean }) {

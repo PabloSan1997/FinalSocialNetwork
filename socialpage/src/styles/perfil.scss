@@ -1,0 +1,43 @@
+
+@import 'colors.scss';
+.perfil{
+    display: flex;
+    margin: 2rem 0;
+    .perfil_imagen{
+        max-width: 15rem;
+        margin: auto 0 auto auto;
+    }
+    .area_info_user{
+        margin: auto auto auto 1rem;
+    }
+    h2{
+        font-size: 1.8rem;
+    }
+    h3{
+        font-weight:400;
+        margin-bottom: 0.5rem;
+    }
+    h2, h3{
+        color:  $maincolor-950;
+    }
+    .description{
+        font-size: 1.2rem;
+        max-width: 15rem;
+    }
+    nav{
+        display: flex;
+        margin-top: 0.8rem;
+        .follow{
+            margin: auto auto auto 0;
+            font-size: 1.2rem;
+            text-decoration: none;
+            color: $maincolor-900;
+            font-weight: bold;
+            transition: all 0.2s ease;
+            &:hover{
+                color: $maincolor-950;
+                transform: scale(1.1);
+            }
+        }
+    }
+}
