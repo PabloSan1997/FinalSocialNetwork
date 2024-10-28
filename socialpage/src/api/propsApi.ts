@@ -1,7 +1,7 @@
 
 
 export const propsApi = {
-    baseUrl: import.meta.env.DEV ? 'http://localhost:3005/api' : `${window.location.origin}`,
+    baseUrl: import.meta.env.DEV ? 'http://localhost:3005/api' : `${window.location.origin}/api`,
     onlyAuth: (token: string) => (
         {
             'Authorization': `Bearer ${token}`
