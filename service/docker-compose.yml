@@ -1,0 +1,14 @@
+
+services:
+
+  finalsocialmedia:
+    build: .
+    ports:
+      - 3005:3005
+    restart: always
+    env_file: ./.env
+    environment:
+      - URL_DB=$URL_DB_ENV
+      - USERNAME=$USERNAME_ENV
+      - PASSWORD=$PASSWORD_ENV
+      - SECRET_KEY=$SECRET_KEY_ENV
