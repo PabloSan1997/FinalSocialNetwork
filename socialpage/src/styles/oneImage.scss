@@ -9,6 +9,12 @@
     display: flex;
     flex-direction: column;
     position: relative;
+    .description{
+        font-size: 1.3rem;
+        color: $maincolor-900;
+        margin:0.5rem auto;
+        width: 95%;
+    }
     .close{
         width: 2rem;
         color: $maincolor-500;

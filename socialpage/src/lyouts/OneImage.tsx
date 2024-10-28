@@ -34,7 +34,7 @@ export function OneImage() {
         <div className="area_one_image">
             <ImageUserPart {...userImageInfo} createAt={oneImage.createAt} />
             {authState.username === oneImage.user.username && <XCircleIcon onClick={borrar} className="close"/>}
-            <p>{oneImage.description}</p>
+            <p className="description">{oneImage.description}</p>
             <img src={oneImage.urlImage} alt={userImageInfo.username} className="image"/>
             <div className="image_info">
                 <LikeSection idImage={oneImage.id} countLikes={oneImage.likes} userLike={oneImage.userLike}/>

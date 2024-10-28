@@ -1,40 +1,72 @@
-
 @import 'colors.scss';
-.perfil{
+
+.perfil {
     display: flex;
     margin: 2rem 0;
-    .perfil_imagen{
+
+    .perfil_imagen {
         max-width: 15rem;
         margin: auto 0 auto auto;
     }
-    .area_info_user{
+
+    .area_info_user {
         margin: auto auto auto 1rem;
+
+        .follow_button {
+            width: fit-content;
+            padding: 0.1rem 0.89rem;
+            border: 3px solid $maincolor-300;
+            font-size: 1rem;
+            border-radius: 6px;
+            color: $maincolor-900;
+            background: $maincolor-100;
+            transition: background 0.3s ease;
+            cursor: pointer;
+            margin-bottom: 0.5rem;
+            &:hover {
+                background: $maincolor-300;
+            }
+            &.active{
+                 background: $maincolor-300;
+                 &:hover{
+                    background: $maincolor-100;
+                 }
+            }
+        }
     }
-    h2{
+
+    h2 {
         font-size: 1.8rem;
     }
-    h3{
-        font-weight:400;
+
+    h3 {
+        font-weight: 400;
         margin-bottom: 0.5rem;
     }
-    h2, h3{
-        color:  $maincolor-950;
+
+    h2,
+    h3 {
+        color: $maincolor-950;
     }
-    .description{
+
+    .description {
         font-size: 1.2rem;
         max-width: 15rem;
     }
-    nav{
+
+    nav {
         display: flex;
         margin-top: 0.8rem;
-        .follow{
-            margin: auto auto auto 0;
+
+        .follow {
+            margin: auto 0.9rem auto 0;
             font-size: 1.2rem;
             text-decoration: none;
             color: $maincolor-900;
             font-weight: bold;
             transition: all 0.2s ease;
-            &:hover{
+
+            &:hover {
                 color: $maincolor-950;
                 transform: scale(1.1);
             }

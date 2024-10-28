@@ -17,6 +17,6 @@ export function FollowButton() {
     if (authState.username === socialState.showUserInfo.username)
         return null;
     return (
-        <button className="follow_button" onClick={generateLike}>{socialState.followUser ? 'Siguiendo' : 'Seguir'}</button>
+        <button className={socialState.followUser?'follow_button active':'follow_button'} onClick={generateLike}>{socialState.followUser ? 'Siguiendo' : 'Seguir'}</button>
     );
 }
