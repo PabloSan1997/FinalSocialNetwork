@@ -108,4 +108,15 @@ export class UserApi {
             throw await ft.json() as ErroDto;
         return ft.json();
     }
+    async searchUser(token:string, name:string, page = 0, size = 10):Promise<SearchUserResponse>{
+        const ft = await fetch(`${propsApi.baseUrl}/user/search/${name}?page=${page}&size=${size}`, {
+            method:'GET',
+            headers:{
+                ...propsApi.onlyAuth(token)
+            }
+        });
+        if (!ft.ok)
+            throw await ft.json() as ErroDto;
+        return ft.json();
+    }
 }

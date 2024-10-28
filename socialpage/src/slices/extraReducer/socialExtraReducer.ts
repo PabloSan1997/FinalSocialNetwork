@@ -172,5 +172,16 @@ export const socialExtraReducer = {
                 throw { meesage: err.message };
             }
         }
+    ),
+    searchUsers:createAsyncThunk(
+        'extraReducer/searchUser',
+        async ({token, name ,page}:{token:string, name:string, page:number})=>{
+            try {
+                return userApi.searchUser(token, name, page);
+            } catch (error) {
+                const err = error as ErroDto;
+                throw { meesage: err.message };
+            }
+        }
     )
 }

@@ -117,6 +117,9 @@ const socialSlice = createSlice({
         builder.addCase(socialExtraReducer.getFollowings.fulfilled, (state, action)=>{
             state.listFollow = action.payload;
         });
+
+        //Search users
+        builder.addCase(socialExtraReducer.searchUsers.fulfilled, ()=>{});
     }
 });
 

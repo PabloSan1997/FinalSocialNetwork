@@ -130,6 +130,11 @@ interface UserImage {
     userInfo: UserInfo;
 }
 
+interface SearchUserResponse{
+    usernames:UserImage[];
+    nicknames:UserImage[];
+}
+
 interface UserInfo {
     id: number;
     urlPerfil: string;
