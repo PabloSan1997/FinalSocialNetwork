@@ -11,6 +11,7 @@ import com.example.demo.models.entities.Users;
 import com.example.demo.repositories.*;
 import com.example.demo.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -133,6 +134,14 @@ public class UserServiceImp implements UserService {
         });
         user.setEnabled(false);
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public SearchUserDto searchUser(String name, Pageable pageable) {
+        List<Users> usernames = userRepository.findLikeUsernames(name, pageable);
+        List<Users> nicknames = userRepository.findLikeNicknames(name, pageable);
+        return SearchUserDto.builder().usernames(usernames).nicknames(nicknames).build();
     }
 
     private UserShowInfoDto generateShowUser(Users user){

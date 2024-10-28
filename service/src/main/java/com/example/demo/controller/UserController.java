@@ -62,6 +62,11 @@ public class UserController {
     public ResponseEntity<?> findIsFollowing(@RequestParam String username){
         return ResponseEntity.ok(followerService.followingThisUser(username));
     }
+
+    @GetMapping("/search/{username}")
+    public ResponseEntity<?> search(@PathVariable String username, Pageable pageable){
+        return ResponseEntity.ok(userService.searchUser(username, pageable));
+    }
     @PostMapping("/follow/{id}")
     public ResponseEntity<?> saveFollow(@PathVariable Long id){
         return ResponseEntity.status(HttpStatus.CREATED).body(followerService.save(id));
