@@ -5,6 +5,7 @@ import { socialExtraReducer } from "../slices/extraReducer/socialExtraReducer";
 import { Navigate, useSearchParams } from "react-router-dom";
 import UserFollow from "../components/UserFollow";
 import '../styles/followList.scss';
+import { HomeNextComponent } from "../components/HomeNextComponent";
 
 
 export function FollowList({ isFollowing }: { isFollowing: boolean }) {
@@ -16,22 +17,27 @@ export function FollowList({ isFollowing }: { isFollowing: boolean }) {
   const token = authState.token;
   const page: number = isNaN(Number(params.get('page'))) ? 0 : Number(params.get('page'));
   const username: string = params.get('name') as string;
+  const baseName = isFollowing?'/followings':'/followers';
   useEffect(() => {
     if (!isNaN(page))
       if (isFollowing)
         dispatch(socialExtraReducer.getFollowings({ token, username: username, page }));
       else
         dispatch(socialExtraReducer.getFollowers({ token, username: username, page }));
-  }, [isFollowing]);
+  }, [isFollowing, page, username]);
 
   if (!username || !username.trim())
     return <Navigate to={'/home'} />
   return (
+    <>
     <div className="list_follow">
       <h2>{isFollowing?'Followings: ':'Followers: '} {username}</h2>
       {socialState.listFollow.users.map(f => (
         <UserFollow key={f.username} {...f} />
       ))}
     </div>
+    <HomeNextComponent pathbase={`${baseName}?name=${username}&page=`} page={page} className=''/>
+    </>
+    
   );
 }

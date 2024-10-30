@@ -27,7 +27,8 @@
         }
     }
     .image{
-        margin: auto;
+        margin: auto auto 1rem auto;
+        max-width: 98%;
     }
     .image_info{
         display: flex;

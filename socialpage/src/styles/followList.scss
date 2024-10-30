@@ -3,7 +3,7 @@
 .list_follow {
     margin: 2rem auto;
     display: flex;
-    width: 85%;
+    width: 95%;
     flex-direction: column;
 
     h2 {
@@ -14,7 +14,14 @@
     .follow_user {
         width: fit-content;
         display: flex;
-
+        margin-bottom: 2rem;
+        background: $maincolor-100;
+        width: 100%;
+        cursor: pointer;
+        transition: 0.2s ease background;
+        &:hover{
+            background: $maincolor-200;
+        }
         img {
             width: 5rem;
             cursor: pointer;
@@ -39,14 +46,5 @@
             }
         }
 
-        img,
-        span.username {
-            &:hover {
-                transform: scale(1.2);
-            }
-            &:active{
-                transform: scale(1);
-            }
-        }
     }
 }
