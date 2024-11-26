@@ -4,17 +4,19 @@ This part describes the backend development.
 
 ## Tecnhologies
 
-- **Libraries and Frameworks:** Spring boot, Spring security, Spring web, Jsonwebtoken.
+- **Libraries and Frameworks:** Spring boot, Spring security, Spring web, Jsonwebtoken, Bcrypt.
 - **Language**: Java
 
 ## Requests and Responses
 
 ### Register
 
+This request creates a new user with his roles, hash password and responses with a jsonwebtoken
+
 Request path
 
 ```http
-GET /api/user/register
+POST /api/user/register
 ```
 Authenticate: No
 
@@ -48,10 +50,12 @@ Response Body
 
 ### Login
 
+This request authenticates the user with their username and password to respond with a jsonwebtoken. The token is register in the database with the time it was generated.
+
 Request path
 
 ```http
-GET /api/user/login
+POST /api/user/login
 ```
 Authenticate: No
 
@@ -81,3 +85,21 @@ Response Body
 ```
 
 
+### Logout
+
+In the database there is a table called `login_register`, this table has a column called `enabled`. This request changes the "enabled" value "true" to "false" to block the token making the request.
+
+Request path
+
+```http
+POST /api/user/logout
+```
+Authenticate: Yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token"
+}
+```
