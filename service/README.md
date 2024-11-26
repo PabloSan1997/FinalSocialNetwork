@@ -87,7 +87,7 @@ Response Body
 
 ### Logout
 
-In the database there is a table called `login_register`, this table has a column called `enabled`. This request changes the "enabled" value "true" to "false" to block the token making the request.
+In the database there is a table called `login_register`, this table has a column called `enabled`. This request changes the `enabled` value "true" to "false" to block the token making the request.
 
 Request path
 
@@ -103,3 +103,46 @@ Request header
   "Authentication": "Bearer token"
 }
 ```
+
+### User info and get friend info
+
+This request gets the own user or friend info.
+
+Request paths
+
+- User info
+
+```http
+GET /api/user/userInfo
+```
+
+- Friend info
+
+```http
+GET /api/user/otherUser?username={username}
+```
+
+Authenticate: yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token"
+}
+```
+
+Response Body
+
+```JSON
+{
+  "id": "number",
+  "username": "string",
+  "nickname": "string",
+  "description": "string",
+  "urlPerfil": "string",
+  "following": "number",
+  "followers": "number"
+}
+```
+
