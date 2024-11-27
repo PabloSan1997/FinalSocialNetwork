@@ -491,3 +491,100 @@ Response Body
   "userLike": "boolean"
 }
 ```
+
+### Like Image
+
+This request creates o removes a like to a image
+
+Request paths
+
+```http
+POST /api/images/like/{idImages}
+```
+
+Authenticate: yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token"
+}
+```
+
+Response Body
+
+```JSON
+{
+  "idImage": "string",
+  "countLikes": "number",
+  "userLike": "boolean"
+}
+```
+
+### Add Comment
+
+This request adds a new comment into a image.
+
+```http
+POST /api/comments
+```
+
+Authenticate: yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token",
+  "Content-Type": "application/json"
+}
+```
+
+Request body
+
+```JSON
+{
+  "comment":"string",
+  "idImage":"string"
+}
+```
+
+Response Body
+
+```JSON
+{
+  "id": "number",
+  "createAt": "string",
+  "comment": "string",
+  "user": {
+    "username": "string",
+    "nickname": "string",
+    "userInfo": {
+      "id": "number",
+      "urlPerfil": "string"
+    }
+  }
+}
+```
+
+### Delete Comment
+
+This request only deletes user comment.
+
+Request paths
+
+```http
+DELETE /api/comments/{idComment}
+```
+
+Authenticate: yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token"
+}
+```
+
