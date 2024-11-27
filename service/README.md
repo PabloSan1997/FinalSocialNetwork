@@ -258,7 +258,7 @@ This request is to search for people.
 Request paths
 
 ```http
-GET /api/user/search/{username or nickname}
+GET /api/user/search/{username or nickname}?page={number}&size={number}
 ```
 
 Authenticate: yes
@@ -305,7 +305,7 @@ This request creates a new follow
 Request paths
 
 ```http
-GET /api/user/follow/{idUser}
+POST /api/user/follow/{idUser}
 ```
 
 Authenticate: yes
@@ -323,5 +323,171 @@ Response Body
 ```JSON
 {
   "followingThisUser": true
+}
+```
+
+### Get images
+
+This request gets some images for home page or user profile
+
+Request paths
+
+- Request images for home page
+
+```http
+GET /api/images?page={number}&size={number}
+```
+
+- Request by username
+
+```http
+GET /api/images/user?username={string}page={number}&size={number}
+```
+
+Authenticate: yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token"
+}
+```
+
+Response Body
+
+```JSON
+[
+  {
+    "id": "string",
+    "urlImage": "string",
+    "description": "string",
+    "createAt": "string",
+    "username": "string",
+    "nickname": "string",
+    "urlPerfil": "string",
+    "comments": "number",
+    "likes": "number",
+    "userLike": "boolean"
+  }
+]
+```
+
+### Delete images
+
+This request only deletes user images obtained from jsonwebtoken.
+
+Request paths
+
+```http
+DELETE /api/images/{idImage}
+```
+
+Authenticate: yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token"
+}
+```
+
+### Get One Image
+
+This request gets only one image with its full information with pageable comments
+
+```http
+GET /api/images/{idImage}?size={number}&page={number}
+```
+
+Authenticate: yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token"
+}
+```
+
+Response Body
+
+```JSON
+{
+  "id": "string",
+  "urlImage": "string",
+  "description": "string",
+  "createAt": "string",
+  "user": {
+    "username": "string",
+    "nickname": "string",
+    "userInfo": {
+      "id": "number",
+      "urlPerfil": "string"
+    }
+  },
+  "comments": [
+    {
+      "id": "number",
+      "createAt": "string",
+      "comment": "string",
+      "user": {
+        "username": "string",
+        "nickname": "string",
+        "userInfo": {
+          "id": "number",
+          "urlPerfil": "string"
+        }
+      }
+    }
+  ],
+  "likes": "number",
+  "userLike": "booolean"
+}
+```
+
+### Post new image
+
+This request adds a new image or post.
+
+```http
+POST /api/images
+```
+
+Authenticate: yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token",
+  "Content-Type": "application/json"
+}
+```
+
+Request body
+
+```JSON
+{
+	"urlImage":"string",
+	"description":"string"
+}
+```
+
+Response Body
+
+```JSON
+{
+  "id": "string",
+  "urlImage": "string",
+  "description": "string",
+  "createAt": "string",
+  "username": "string",
+  "nickname": "string",
+  "urlPerfil": "string",
+  "comments": "number",
+  "likes": "number",
+  "userLike": "boolean"
 }
 ```
