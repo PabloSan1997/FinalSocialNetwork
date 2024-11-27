@@ -146,3 +146,182 @@ Response Body
 }
 ```
 
+### Followers and Followings
+
+This requests get followers and followins of a user.
+
+Request paths
+
+- Followers
+
+```http
+GET /api/user/follow/find/followers/{idUser}?page={page}&size={size}
+```
+
+- Followings
+
+```http
+GET /api/user/follow/find/followings/{idUSer}?page={number}&size={number}
+```
+
+Authenticate: yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token"
+}
+```
+
+Response Body
+
+```JSON
+{
+  "users": [
+    {
+      "username": "string",
+      "nickname": "string",
+      "userInfo": {
+        "id": "number",
+        "urlPerfil": "string"
+      }
+    }
+  ]
+}
+```
+
+### Count follows
+
+This requests get followers and followins numbers
+
+Request paths
+
+
+```http
+GET /api/user/follow/count/{idUser}
+```
+
+
+Authenticate: yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token"
+}
+```
+
+Response Body
+
+```JSON
+{
+  "following": "number",
+  "followers": "number"
+}
+```
+
+### Know if it is following
+
+This requests responses with a boolean to know if a user is following other user. The main user is from the token and the secon user is from
+dynamic URL 
+
+Request paths
+
+```http
+GET /api/user/follow/followUser?username={string}
+```
+
+Authenticate: yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token"
+}
+```
+
+Response Body
+
+```JSON
+{
+  "followingThisUser": "boolean"
+}
+```
+
+### Search friend
+
+This request is to search for people.
+
+Request paths
+
+```http
+GET /api/user/search/{username or nickname}
+```
+
+Authenticate: yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token"
+}
+```
+
+Response Body
+
+```JSON
+{
+  "usernames": [
+    {
+      "username": "string",
+      "nickname": "string",
+      "userInfo": {
+        "id": "number",
+        "urlPerfil": "string"
+      }
+    }
+  ],
+  "nicknames": [
+    {
+      "username": "string",
+      "nickname": "string",
+      "userInfo": {
+        "id": "number",
+        "urlPerfil": "string"
+      }
+    }
+  ]
+}
+```
+
+### Generate follow
+
+This request creates a new follow
+
+Request paths
+
+```http
+GET /api/user/follow/{idUser}
+```
+
+Authenticate: yes
+
+Request header
+
+```JSON
+{
+  "Authentication": "Bearer token"
+}
+```
+
+Response Body
+
+```JSON
+{
+  "followingThisUser": true
+}
+```
