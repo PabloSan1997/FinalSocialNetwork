@@ -10,6 +10,7 @@ This part describes the backend development.
 
 - **Libraries and Frameworks:** Spring boot, Spring security, Spring web, Jsonwebtoken, Bcrypt.
 - **Language**: Java
+- **Software development:** Openjdk-21, Docker
 
 ## Requests and Responses
 
