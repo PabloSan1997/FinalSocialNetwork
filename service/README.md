@@ -2,6 +2,10 @@
  
 This part describes the backend development.
 
+## Database diagram
+
+[![Imagen](../db_diagram/db_diagram.png)](../db_diagram/db.txt "diagrama")
+
 ## Tecnhologies
 
 - **Libraries and Frameworks:** Spring boot, Spring security, Spring web, Jsonwebtoken, Bcrypt.
