@@ -6,6 +6,74 @@ This part describes the backend development.
 
 [![Imagen](../db_diagram/db_diagram.png)](../db_diagram/db.txt "diagrama")
 
+### DSL Code
+
+```DSL
+table users{
+  id bigint [primary key]
+  username varchar(60) [unique]
+  nickname varchar(60)
+  password varchar(500)
+  id_info bigint
+}
+
+table login_register{
+  id bigint [primary key]
+  jwtoken varchar(2500) [unique]
+  enable boolean
+  create_at date
+  update_at date
+  id_user bigint
+}
+
+table user_info{
+  id bigint [primary key]
+  url_perfil varchar(2500)
+  description varchar(250)
+}
+
+table images{
+  id uuid [primary key]
+  id_user bigint
+  description varchar(250)
+  url_image varchar(2500)
+  create_at date
+}
+
+table following{
+  id bigint [primary key]
+  id_user1 id
+  id_user2 id
+  follower_date date
+}
+
+table comments{
+  id bigint [primary key]
+  comment varchar(250)
+  id_image bigint
+  id_user bigint
+  create_at date
+}
+
+table likes_photo{
+  id bigint [primary key]
+  id_user bigint
+  id_image bigint
+  like_date date
+}
+
+
+Ref : users.id_info - user_info.id
+Ref : users.id < images.id_user
+Ref : users.id > following."id_user1"
+Ref : users.id > following."id_user2"
+Ref : users.id > login_register.id_user
+Ref : users.id > comments.id_user
+Ref : images.id > comments.id_image
+Ref : likes_photo.id_image < images.id
+Ref : likes_photo.id_user < users.id
+```
+
 ## Tecnhologies
 
 - **Libraries and Frameworks:** Spring boot, Spring security, Spring web, Jsonwebtoken, Bcrypt.
