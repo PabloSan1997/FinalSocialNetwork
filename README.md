@@ -10,3 +10,6 @@ In this application, users can create an account, publish images with descriptio
 
 - **Front-end files:** [here](./socialpage "service")
 
+## Author
+
+- [Jose Pablo Santillana](https://github.com/PabloSan1997 "Perfil")
